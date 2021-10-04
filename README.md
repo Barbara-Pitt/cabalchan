@@ -4,6 +4,9 @@ Anonymous forum software
 # Demo instance:
 www.cabalchan.org
 
+## Building:
+./mvnw clean package -DskipTests
+
 ## Notes
 
 Cabalchan is still in an extreme alpha state. While usable, it is in need of both (manual) functional testing and automated tests. 
