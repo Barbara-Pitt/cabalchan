@@ -1,0 +1,154 @@
+/* latin-ext */
+@font-face {
+    font-family: 'Titillium Web';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(/css/fonts/NaPecZTIAOhVxoMyOr9n_E7fdM3mDaZRbryhsA.woff2) format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* latin */
+  @font-face {
+    font-family: 'Titillium Web';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(/css/fonts/NaPecZTIAOhVxoMyOr9n_E7fdMPmDaZRbrw.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+
+body {
+    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url("/images/cabalchanbg.jpeg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+.entry {
+    margin-bottom: 10px;
+    background: linear-gradient( rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75) );
+    padding: 10px;
+}
+
+.ecomment {
+    text-align: justify;
+    white-space: pre-line;
+}
+
+.quotetext {
+    color:darkorange;
+}
+
+.redtext {
+    color: red;
+    font-size: large;
+}
+
+.entry img {
+    max-width: 100%;
+}
+
+.sidemenu {
+    background: linear-gradient( rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75) );
+    padding: 10px;
+}
+
+.entries {
+    height:100vh;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.entries::-webkit-scrollbar { 
+    display: none;
+}
+
+.cwbox {
+    max-width: fit-content;
+    max-height: fit-content;
+}
+
+.cwtext {
+    cursor: pointer;
+    text-align: center;
+    color:darkorange;
+    user-select: none;
+}
+
+.cwtext:hover {
+    color:orange;
+}
+
+.spoiler {
+    color:gray;
+    background-color: grey;
+    transition: 1.0s linear;
+}
+
+::selection {
+    color:white;
+    background-color: darkorange;
+}
+
+.spoiler:hover{
+    color: white;
+    background-color: transparent;
+}
+
+.ytembed {
+    cursor: pointer;
+}
+
+audio {
+    margin-top: 5px;
+    max-width: 90%;
+}
+
+.reply {
+    cursor: pointer;
+    color:darkorange;
+}
+
+.reply:hover {
+    color:orange;
+}
+
+.archive {
+    text-align: center;
+}
+
+.arrows {
+    padding: 10px;
+}
+
+.report {
+    opacity: 50%;
+}
+
+.report:hover {
+    opacity: 100%;
+}
+
+.errorpage {
+    color:darkorange;
+    text-align: center;
+    width: 100%;
+    height: 300px;
+    padding-top: 125px;
+}
+
+.banpage {
+    text-align: left;
+}
+
+.modform {
+    margin:0;
+    padding:0;
+}
+
+.modcomment {
+    color: orange;
+    font-size: large;
+}

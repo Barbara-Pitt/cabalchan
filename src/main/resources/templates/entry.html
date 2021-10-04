@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace = "fragments :: head"></head>
+  <body>
+	
+  <div class="container">
+    <div class="row">
+      <div class="three columns">
+        <div th:replace="fragments :: leftmenu"></div>
+      </div>
+      <div class="six columns entries" x-data="{ reply : true , flag : '' }">
+        <div class="entry" th:if="${previous} == null">
+            <div>
+                <a th:if="${OP.parent} != null" th:href="'/entry?entryid=' + ${OP.parent.id}"><i class="bi bi-arrow-90deg-up"></i></a>
+                <span th:text="'#' + ${OP.id}"></span>
+                <img th:title="${OP.flag.flagname}" th:if="${OP.flag}" th:src="${OP.flag.filename}" alt="flag" />
+                <span th:text="${#temporals.format(OP.createDate,'yyyy-MM-dd (EEE) HH:mm:ss')}">&nbsp;</span>
+                </div>
+                <span th:utext="${OP.comment}"></span>
+                <div th:if="${OP.attachment}">
+                
+                <div th:if="${OP.attachment.spoiler}" th:attr="x-data='{ cw : true }'">
+                  <div class="cwtext" @click="cw = !cw">[ Content Warning - click to show/hide ]</div>
+                  <div th:class="${OP.attachment.spoiler} ? cwbox : ''" x-show="!cw">
+                    <img loading="lazy" th:if="${OP.attachment.filetype} == 'image/png'" th:src="'/' + ${OP.attachment.filename}" />
+                    <img loading="lazy" th:if="${OP.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${OP.attachment.filename}" />
+                    <img loading="lazy" th:if="${OP.attachment.filetype} == 'image/gif'" th:src="'/' + ${OP.attachment.filename}" />
+                    <video th:if="${OP.attachment.filetype} == 'video/webm'" controls width="100%" preload="metadata">
+                      <source th:src="'/' + ${OP.attachment.filename}" type="video/webm">
+                    </video>
+                    <video th:if="${OP.attachment.filetype} == 'video/mp4'" controls width="100%" preload="metadata">
+                      <source th:src="'/' + ${OP.attachment.filename}" type="video/mp4">
+                    </video>
+                    <audio preload="none" th:if="${OP.attachment.filetype} == 'audio/mpeg'" controls th:src="'/' + ${OP.attachment.filename}"></audio>
+                    <audio preload="none" th:if="${OP.attachment.filetype} == 'audio/ogg'" controls th:src="'/' + ${OP.attachment.filename}"></audio>
+                    <audio preload="none" th:if="${OP.attachment.filetype} == 'audio/wav'" controls th:src="'/' + ${OP.attachment.filename}"></audio>
+                    <a target="_blank" th:if="${OP.attachment.filetype} == 'application/pdf'" th:href="'/' + ${OP.attachment.filename}">
+                      <i class="bi bi-file-pdf"></i>
+                      <span th:text="${OP.attachment.filename}"></span>
+                    </a>
+                    <a target="_blank" th:if="${OP.attachment.filetype} == 'application/zip'" th:href="'/' + ${OP.attachment.filename}">
+                      <i class="bi bi-paperclip"></i>
+                      <span th:text="${OP.attachment.filename}"></span>
+                    </a>
+                  </div>
+                </div>
+                
+                <div th:if="!${OP.attachment.spoiler}">
+                    <img loading="lazy" th:if="${OP.attachment.filetype} == 'image/png'" th:src="'/' + ${OP.attachment.filename}" />
+                    <img loading="lazy" th:if="${OP.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${OP.attachment.filename}" />
+                    <img loading="lazy" th:if="${OP.attachment.filetype} == 'image/gif'" th:src="'/' + ${OP.attachment.filename}" />
+                    <video th:if="${OP.attachment.filetype} == 'video/webm'" controls width="100%" preload="metadata">
+                      <source th:src="'/' + ${OP.attachment.filename}" type="video/webm">
+                    </video>
+                    <video th:if="${OP.attachment.filetype} == 'video/mp4'" controls width="100%" preload="metadata">
+                      <source th:src="'/' + ${OP.attachment.filename}" type="video/mp4">
+                    </video>
+                    <audio preload="none" th:if="${OP.attachment.filetype} == 'audio/mpeg'" controls th:src="'/' + ${OP.attachment.filename}"></audio>
+                    <audio preload="none" th:if="${OP.attachment.filetype} == 'audio/ogg'" controls th:src="'/' + ${OP.attachment.filename}"></audio>
+                    <audio preload="none" th:if="${OP.attachment.filetype} == 'audio/wav'" controls th:src="'/' + ${OP.attachment.filename}"></audio>
+                    <a target="_blank" th:if="${OP.attachment.filetype} == 'application/pdf'" th:href="'/' + ${OP.attachment.filename}">
+                      <i class="bi bi-file-pdf"></i>
+                      <span th:text="${OP.attachment.filename}"></span>
+                    </a>
+                    <a target="_blank" th:if="${OP.attachment.filetype} == 'application/zip'" th:href="'/' + ${OP.attachment.filename}">
+                      <i class="bi bi-paperclip"></i>
+                      <span th:text="${OP.attachment.filename}"></span>
+                    </a>
+                </div>
+              </div>
+              <hr>
+              <div>
+                <span th:if="!${oldOP}">
+                  <span @click="reply = !reply" class="reply">
+                    <i class="bi bi-chat-dots-fill"></i>
+                    <span th:text="${#lists.size(OP.replies)}"></span>&nbsp;Comments
+                  </span>
+                </span>
+                <span th:if="${oldOP}" class="archive" title="Archived">
+                  <i class="bi bi-archive-fill"></i>&nbsp;Archived
+                  (<span th:text="${#lists.size(OP.replies)}"></span>&nbsp;Comments)
+                </span>
+                <span class="u-pull-right report">
+                  <small>
+                  <a target="_blank" th:href="'/report?entryid='+ ${OP.id}"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;Report</a>
+                  </small>
+                </span>
+                <div class="u-cf"></div>
+              </div>
+        </div>
+        
+        <div th:replace="fragments :: reply"></div>
+        <!-- replies -->
+        <div th:each="posts : ${entries}" class="entry">
+          <div>
+            <span th:text="'#' + ${posts.id}"></span>
+            <img th:title="${posts.flag.flagname}" th:if="${posts.flag}" th:src="${posts.flag.filename}" alt="flag" />
+            <span th:text="${#temporals.format(posts.createDate,'yyyy-MM-dd (EEE) HH:mm:ss')}"></span>
+
+          </div>
+          <span th:utext="${posts.comment}"></span>
+          <div th:replace="fragments :: attachment"></div>
+          <hr>
+          <div>
+            <a th:href="'/entry?entryid=' + ${posts.id}"><i class="bi bi-chat-fill"></i>&nbsp;<span th:text="${#lists.size(posts.replies)}"></span>&nbsp;Comments</a>
+            <span class="u-pull-right report">
+              <small>
+              <a target="_blank" th:href="'/report?entryid='+ ${posts.id}"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;Report</a>
+              </small>
+            </span>
+            <div class="u-cf"></div>
+          </div>
+        </div>
+        <br>
+        <div class="arrows">
+          <a th:if="${previous} != null" class="u-pull-left" th:href="'/entry?entryid=' + ${OP.id} +'&page='+${previous}"><i class="bi bi-arrow-left-square-fill"></i>&nbsp;prev</a>
+          <a class="u-pull-right" th:href="'/entry?entryid=' + ${OP.id} +'&page='+${next}">next&nbsp;<i class="bi bi-arrow-right-square-fill"></i></a>
+          <div class="u-cf"></div>
+        </div>
+        <br><br>
+      </div>
+      <div class="three columns">
+        <div th:replace="fragments :: sidemenu"></div>
+      </div>
+    </div>
+  </div>
+  </body>
+</html>

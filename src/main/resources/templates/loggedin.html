@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace = "fragments :: head"></head>
+  <body>
+	
+  <div class="container">
+    <div class="row">
+        <div class="nine columns">
+            <div class="entry">
+                <h4>User Profile</h4>
+                <hr>
+                <div>
+                    <p>username: <span th:text="${username}"></span>
+                    <br>roles: <span th:text="${authorities}"></span></p>
+                    <p th:if="${staff}"><a href="/mod/home">[ Moderation Interface ]</a></p>
+                    <a href="/auth/logout"><button class="button">Logout</button></a>
+                </div>
+            </div>
+        </div>
+        <div class="three columns">
+            <div th:replace="fragments :: sidemenu"></div>
+        </div>
+    </div>
+  </div>
+  </body>
+</html>

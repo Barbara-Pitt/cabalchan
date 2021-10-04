@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace = "fragments :: head"></head>
+  <body>
+	
+  <div class="container">
+    <div class="row">
+      <form action="/mod/action" method="POST" class="modform">
+      <div class="three columns">
+        <div class="sidemenu">
+            <p><a href="/mod/home">/mod menu/</a></p>
+            <input
+            type="hidden"
+            th:name="${_csrf.parameterName}"
+            th:value="${_csrf.token}" />
+            <hr>
+            <div>
+                <input class="button-primary" type="submit" value="Do Action">
+            </div>
+            <hr>
+
+            <div>
+                <input type="radio" id="delete" name="actiontype" value="delete">
+                <span title="Delete post">
+                    <i class="bi bi-trash-fill"></i>&nbsp;DELETE
+                </span>
+            </div>
+
+            <div>
+              <input type="radio" id="warning" name="actiontype" value="warning">
+              <span title="Warn User">
+                <i class="bi bi-exclamation-triangle-fill"></i>&nbsp;WARNING
+              </span>
+            </div>
+
+            <div>
+                <input type="radio" id="ban" name="actiontype" value="ban">
+                <span title="Ban this poster by IP">
+                    <i class="bi bi-hammer"></i>&nbsp;BAN
+                </span>
+            </div>
+
+            <div>
+                <input type="radio" id="bananddelete" name="actiontype" value="bananddelete">
+                <span title="Delete Post and Ban by IP">
+                    <i class="bi bi-tornado"></i>&nbsp;BAN & DELETE
+                </span>
+            </div>
+            
+            <div>
+                <input type="radio" id="spoiler" name="actiontype" value="spoiler">
+                <span title="Spoiler images/videos">
+                  <i class="bi bi-eye-slash-fill"></i>&nbsp;SPOILER
+                </span>
+            </div>
+
+            <div>
+              <input type="radio" id="unspoiler" name="actiontype" value="unspoiler">
+              <span title="Unspoiler images/videos">
+                <i class="bi bi-eye-fill"></i>&nbsp;UNSPOILER
+              </span>
+            </div>
+            <div>
+                <input type="radio" id="dismiss" name="actiontype" value="dismiss" checked>
+                <span title="Dismiss Report">
+                    <i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;DISMISS
+                </span>
+            </div>
+
+            <hr>
+            <div>
+                <label for="banreason">
+                    Reason (if applicable)
+                </label>
+                <select name="banreason" id="banreason">
+                    <option value="Underage User (Rule#1)">Underage User (Rule#1)</option>
+                    <option value="Illegal sexual content (Rule#2)">Illegal sexual content (Rule#2)</option>
+                    <option value="Glows/Minecraft (Rule#3)">Glows/Minecraft (Rule#3)</option>
+                    <option value="Shock Images (Rule#4)" >Shock Images (Rule#4)</option>
+                    <option value="Spam/Shilling/Grifting (Rule#5)">Spam/Shilling/Grifting (Rule#5)</option>
+                    <option value="Bad Faith/Trolling/Baiting (Rule#6)">Bad Faith/Trolling/Baiting (Rule#6)</option>
+                    <option value="Unspoilered NSFW content (Rule#7)">Unspoilered NSFW content (Rule#7)</option>
+                    <option value="Doxing (Rule#8)">Doxing (Rule#8)</option>
+                    <option value="Ban Evasion (Rule#9)">Ban Evasion (Rule#9)</option>
+                    <option value="General/Other (Rule#10)" selected>Other (Rule#10)</option>
+                </select>
+            </div>
+
+            <hr>
+            <div>
+                <label for="banlength">
+                    Length (if applicable)
+                </label>
+                <select name="banlength" id="banlength">
+                    <option value="1">5 Minutes</option>
+                    <option value="2">3 Hours</option>
+                    <option value="3">1 Day</option>
+                    <option value="4" selected>3 Days</option>
+                    <option value="5">7 Days</option>
+                    <option value="6">14 Days</option>
+                    <option value="7">30 Days</option>
+                    <option value="8">Forever</option>
+                </select>
+            </div>
+            <hr>
+            <p><a href="/mod/appeals"><i class="bi bi-emoji-angry-fill"></i>&nbsp;Ban Appeals<span th:if="${appeals}">&nbsp;(<span th:text="${appeals}"></span>)</span></a></p>
+            <p><a href="/mod/news">
+              <i class="bi bi-exclamation-circle-fill"></i>&nbsp;Announcements</span>
+            </a></p>
+            <hr>
+            <a href="/auth/logout">Log Out</a>
+        </div>
+      </div>
+      <div class="six columns entries">
+        <div class="entry">
+            <h4>Reports</h4>
+            <hr>
+        </div>
+        <div class="entry" th:each="report : ${entries}">
+            <div>
+                <p><input type="checkbox" name="reportids[]" th:value="${report.id}">&nbsp;Report # <span th:text="${report.id}"></span></p>
+                <hr>
+                <span th:text="'#' + ${report.entry.id}"></span>
+                <img th:title="${report.entry.flag.flagname}" th:if="${report.entry.flag}" th:src="${report.entry.flag.filename}" alt="flag" />
+                <span th:text="${#temporals.format(report.entry.createDate,'yyyy-MM-dd (EEE) HH:mm:ss')}">&nbsp;</span>
+                </div>
+                <span th:utext="${report.entry.comment}"></span>
+                <div th:if="${report.entry.attachment}">
+                
+                <div th:if="${report.entry.attachment.spoiler}" th:attr="x-data='{ cw : true }'">
+                  <div class="cwtext" @click="cw = !cw">[ Content Warning - click to show/hide ]</div>
+                  <div th:class="${report.entry.attachment.spoiler} ? cwbox : ''" x-show="!cw">
+                    <img loading="lazy" th:if="${report.entry.attachment.filetype} == 'image/png'" th:src="'/' + ${report.entry.attachment.filename}" />
+                    <img loading="lazy" th:if="${report.entry.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${report.entry.attachment.filename}" />
+                    <img loading="lazy" th:if="${report.entry.attachment.filetype} == 'image/gif'" th:src="'/' + ${report.entry.attachment.filename}" />
+                    <video th:if="${report.entry.attachment.filetype} == 'video/webm'" controls width="100%" preload="metadata">
+                      <source th:src="'/' + ${report.entry.attachment.filename}" type="video/webm">
+                    </video>
+                    <video th:if="${report.entry.attachment.filetype} == 'video/mp4'" controls width="100%" preload="metadata">
+                      <source th:src="'/' + ${report.entry.attachment.filename}" type="video/mp4">
+                    </video>
+                    <audio preload="none" th:if="${report.entry.attachment.filetype} == 'audio/mpeg'" controls th:src="'/' + ${report.entry.attachment.filename}"></audio>
+                    <audio preload="none" th:if="${report.entry.attachment.filetype} == 'audio/ogg'" controls th:src="'/' + ${report.entry.attachment.filename}"></audio>
+                    <audio preload="none" th:if="${report.entry.attachment.filetype} == 'audio/wav'" controls th:src="'/' + ${report.entry.attachment.filename}"></audio>
+                    <a target="_blank" th:if="${report.entry.attachment.filetype} == 'application/pdf'" th:href="'/' + ${report.entry.attachment.filename}">
+                      <i class="bi bi-file-pdf"></i>
+                      <span th:text="${report.entry.attachment.filename}"></span>
+                    </a>
+                    <a target="_blank" th:if="${report.entry.attachment.filetype} == 'application/zip'" th:href="'/' + ${report.entry.attachment.filename}">
+                      <i class="bi bi-paperclip"></i>
+                      <span th:text="${report.entry.attachment.filename}"></span>
+                    </a>
+                  </div>
+                </div>
+                
+                <div th:if="!${report.entry.attachment.spoiler}">
+                    <img loading="lazy" th:if="${report.entry.attachment.filetype} == 'image/png'" th:src="'/' + ${report.entry.attachment.filename}" />
+                    <img loading="lazy" th:if="${report.entry.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${report.entry.attachment.filename}" />
+                    <img loading="lazy" th:if="${report.entry.attachment.filetype} == 'image/gif'" th:src="'/' + ${report.entry.attachment.filename}" />
+                    <video th:if="${report.entry.attachment.filetype} == 'video/webm'" controls width="100%" preload="metadata">
+                      <source th:src="'/' + ${report.entry.attachment.filename}" type="video/webm">
+                    </video>
+                    <video th:if="${report.entry.attachment.filetype} == 'video/mp4'" controls width="100%" preload="metadata">
+                      <source th:src="'/' + ${report.entry.attachment.filename}" type="video/mp4">
+                    </video>
+                    <audio preload="none" th:if="${report.entry.attachment.filetype} == 'audio/mpeg'" controls th:src="'/' + ${report.entry.attachment.filename}"></audio>
+                    <audio preload="none" th:if="${report.entry.attachment.filetype} == 'audio/ogg'" controls th:src="'/' + ${report.entry.attachment.filename}"></audio>
+                    <audio preload="none" th:if="${report.entry.attachment.filetype} == 'audio/wav'" controls th:src="'/' + ${report.entry.attachment.filename}"></audio>
+                    <a target="_blank" th:if="${report.entry.attachment.filetype} == 'application/pdf'" th:href="'/' + ${report.entry.attachment.filename}">
+                      <i class="bi bi-file-pdf"></i>
+                      <span th:text="${report.entry.attachment.filename}"></span>
+                    </a>
+                    <a target="_blank" th:if="${report.entry.attachment.filetype} == 'application/zip'" th:href="'/' + ${report.entry.attachment.filename}">
+                      <i class="bi bi-paperclip"></i>
+                      <span th:text="${report.entry.attachment.filename}"></span>
+                    </a>
+                </div>
+              </div>
+              <hr>
+              <div>
+                <span class="reply">
+                  <i class="bi bi-chat-dots-fill"></i>
+                  <span th:text="${#lists.size(report.entry.replies)}"></span>&nbsp;Comments
+                </span>
+                <div class="u-cf"></div>
+              </div>
+              <hr>
+              <div>
+                  <p>SessionID: <span th:text="${report.entry.sessionId}"></span></p>
+                  <p>IP ADDR: <span th:text="${report.entry.ipaddr}"></span></p>
+                  <p><a th:href="'/mod/posthistory?ipaddr='+${report.entry.ipaddr}"><i class="bi bi-person-lines-fill"></i>&nbsp;View Post History</a></p>
+              </div>
+        </div>
+      </div>
+    
+      </form>
+
+      <div class="three columns">
+        <div th:replace="fragments :: sidemenu"></div>
+      </div>
+
+    </div>
+  </div>
+  </body>
+</html>

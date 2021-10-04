@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace = "fragments :: head"></head>
+  <body>
+	
+  <div class="container">
+    <div class="row">
+      <div class="nine columns">
+        <div class="entry">
+          <h4>Thank you</h4>
+          <p>Staff will review this post.</p>
+        </div>
+      </div>
+      <div class="three columns">
+        <div th:replace="fragments :: sidemenu"></div>
+      </div>
+    </div>
+  </div>
+  </body>
+</html>

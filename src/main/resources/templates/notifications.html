@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace = "fragments :: head"></head>
+  <body>
+	
+  <div class="container">
+    <div class="row">
+      <div class="three columns">
+        <div th:replace="fragments :: leftmenu"></div>
+      </div>
+      <div class="six columns entries">
+        <div class="entry" th:each="notification : ${notifications}">
+            <a th:href="'/notif?notifid=' + ${notification.id}">
+              <span th:if="${notification.messageType} == 'reply'">
+                <span th:if="${!notification.seen}"><i class="bi bi-reply-fill"></i>&nbsp;New reply to your post (# </span>
+                <span th:if="${notification.seen}"><i class="bi bi-reply"></i>&nbsp;New reply to your post (# </span>
+                <span th:text="${notification.entry.id}"></span>)
+              </span>
+              <span th:if="${notification.messageType} == 'warning'">
+                <span th:if="${!notification.seen}"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;New warning on your post (# </span>
+                <span th:if="${notification.seen}"><i class="bi bi-exclamation-triangle"></i>&nbsp;New warning on your post (# </span>
+                <span th:text="${notification.entry.id}"></span>)
+              </span>
+            </a>
+        </div>
+      </div>
+      <div class="three columns">
+        <div th:replace="fragments :: sidemenu"></div>
+      </div>
+    </div>
+  </div>
+  </body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace = "fragments :: head"></head>
+  <body>
+	
+  <div class="container">
+    <div class="row">
+      <form action="/mod/action" method="POST" class="modform">
+        <div class="three columns">
+            <div class="sidemenu">
+                <p><a href="/mod/home">/mod menu/</a></p>
+            </div>
+        </div>
+      <div class="six columns entries">
+        <div class="entry">
+            <h4>Post History (last 30)</h4>
+            <hr>
+        </div>
+        <div class="entry" th:each="entry : ${entries}">
+            <div>
+                <span th:text="'#' + ${entry.id}"></span>
+                <img th:title="${entry.flag.flagname}" th:if="${entry.flag}" th:src="${entry.flag.filename}" alt="flag" />
+                <span th:text="${#temporals.format(entry.createDate,'yyyy-MM-dd (EEE) HH:mm:ss')}">&nbsp;</span>
+                </div>
+                <span th:utext="${entry.comment}"></span>
+                <div th:if="${entry.attachment}">
+                
+                <div th:if="${entry.attachment.spoiler}" th:attr="x-data='{ cw : true }'">
+                  <div class="cwtext" @click="cw = !cw">[ Content Warning - click to show/hide ]</div>
+                  <div th:class="${entry.attachment.spoiler} ? cwbox : ''" x-show="!cw">
+                    <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/png'" th:src="'/' + ${entry.attachment.filename}" />
+                    <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${entry.attachment.filename}" />
+                    <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/gif'" th:src="'/' + ${entry.attachment.filename}" />
+                    <video th:if="${entry.attachment.filetype} == 'video/webm'" controls width="100%" preload="metadata">
+                      <source th:src="'/' + ${entry.attachment.filename}" type="video/webm">
+                    </video>
+                    <video th:if="${entry.attachment.filetype} == 'video/mp4'" controls width="100%" preload="metadata">
+                      <source th:src="'/' + ${entry.attachment.filename}" type="video/mp4">
+                    </video>
+                    <audio preload="none" th:if="${entry.attachment.filetype} == 'audio/mpeg'" controls th:src="'/' + ${entry.attachment.filename}"></audio>
+                    <audio preload="none" th:if="${entry.attachment.filetype} == 'audio/ogg'" controls th:src="'/' + ${entry.attachment.filename}"></audio>
+                    <audio preload="none" th:if="${entry.attachment.filetype} == 'audio/wav'" controls th:src="'/' + ${entry.attachment.filename}"></audio>
+                    <a target="_blank" th:if="${entry.attachment.filetype} == 'application/pdf'" th:href="'/' + ${entry.attachment.filename}">
+                      <i class="bi bi-file-pdf"></i>
+                      <span th:text="${entry.attachment.filename}"></span>
+                    </a>
+                    <a target="_blank" th:if="${entry.attachment.filetype} == 'application/zip'" th:href="'/' + ${entry.attachment.filename}">
+                      <i class="bi bi-paperclip"></i>
+                      <span th:text="${entry.attachment.filename}"></span>
+                    </a>
+                  </div>
+                </div>
+                
+                <div th:if="!${entry.attachment.spoiler}">
+                    <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/png'" th:src="'/' + ${entry.attachment.filename}" />
+                    <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${entry.attachment.filename}" />
+                    <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/gif'" th:src="'/' + ${entry.attachment.filename}" />
+                    <video th:if="${entry.attachment.filetype} == 'video/webm'" controls width="100%" preload="metadata">
+                      <source th:src="'/' + ${entry.attachment.filename}" type="video/webm">
+                    </video>
+                    <video th:if="${entry.attachment.filetype} == 'video/mp4'" controls width="100%" preload="metadata">
+                      <source th:src="'/' + ${entry.attachment.filename}" type="video/mp4">
+                    </video>
+                    <audio preload="none" th:if="${entry.attachment.filetype} == 'audio/mpeg'" controls th:src="'/' + ${entry.attachment.filename}"></audio>
+                    <audio preload="none" th:if="${entry.attachment.filetype} == 'audio/ogg'" controls th:src="'/' + ${entry.attachment.filename}"></audio>
+                    <audio preload="none" th:if="${entry.attachment.filetype} == 'audio/wav'" controls th:src="'/' + ${entry.attachment.filename}"></audio>
+                    <a target="_blank" th:if="${entry.attachment.filetype} == 'application/pdf'" th:href="'/' + ${entry.attachment.filename}">
+                      <i class="bi bi-file-pdf"></i>
+                      <span th:text="${entry.attachment.filename}"></span>
+                    </a>
+                    <a target="_blank" th:if="${entry.attachment.filetype} == 'application/zip'" th:href="'/' + ${entry.attachment.filename}">
+                      <i class="bi bi-paperclip"></i>
+                      <span th:text="${entry.attachment.filename}"></span>
+                    </a>
+                </div>
+              </div>
+              <hr>
+              <div>
+                <span class="reply">
+                  <i class="bi bi-chat-dots-fill"></i>
+                  <span th:text="${#lists.size(entry.replies)}"></span>&nbsp;Comments
+                </span>
+                <div class="u-cf"></div>
+              </div>
+              <hr>
+              <div>
+                  <p>SessionID: <span th:text="${entry.sessionId}"></span></p>
+                  <p>IP ADDR: <span th:text="${entry.ipaddr}"></span></p>
+              </div>
+        </div>
+      </div>
+    
+      </form>
+
+      <div class="three columns">
+        <div th:replace="fragments :: sidemenu"></div>
+      </div>
+
+    </div>
+  </div>
+  </body>
+</html>

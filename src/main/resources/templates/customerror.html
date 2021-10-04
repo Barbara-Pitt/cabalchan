@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace = "fragments :: head"></head>
+  <body>
+	
+  <div class="container">
+    <div class="row">
+      <div class="errorpage">
+          <h2>Error</h2>
+          <p th:if="${errormsg}" th:text="${errormsg}"></p>
+          <p><a href="/"><i class="bi bi-arrow-left"></i>Home</a></p>
+          <p th:if="${banned}">You currently have (<span th:text="${banned}"></span>) active bans. <a href="/appeal">[ Appeal ]</a></p>
+      </div>
+    </div>
+  </div>
+  </body>
+</html>

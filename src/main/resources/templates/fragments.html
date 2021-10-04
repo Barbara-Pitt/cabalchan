@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cabalchan</title>
+    <link rel="stylesheet" href="/css/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/skeleton.css">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/cabal.css">
+    <script src="/js/alpine.min.js" defer></script>
+</head>
+<body>
+    <div th:fragment="leftmenu" class="sidemenu">
+        <div><a href="/"><i class="bi bi-chat-text-fill"></i>&nbsp;Threads</a></div>
+        <div><a href="/notifications"><i class="bi bi-bell-fill"></i>&nbsp;Notifications
+            <span th:if="${notificationCount} != null" th:text="'(' + ${notificationCount} + ')'"></span>
+        </a></div>
+        <div><a href="/new"><i class="bi bi-pencil-square"></i>&nbsp;New</a></div>  
+    </div>
+    <div th:fragment="sidemenu" class="sidemenu">
+        <form>
+          <input type="search" placeholder="Search">
+        </form>
+        <div><a href="/">/cabalchan/</a></div>
+        <hr>
+        <div><a href="/news"><i class="bi bi-newspaper"></i>&nbsp;News</a></div>
+        <div><a href="/faq"><i class="bi bi-question-diamond-fill"></i>&nbsp;Help/FAQ</a></div>
+        <div><a href="/rules"><i class="bi bi-card-text"></i>&nbsp;Rules</a></div>
+        <div><a href="/auth"><i class="bi bi-person-fill"></i>&nbsp;Account</a></div>
+        <hr>
+        <div>Links</div>
+        <hr>
+        <div><a target="_blank" href="https://www.leftypol.org">/leftypol/</a></div>
+        <div><a target="_blank" href="https://imageboards.net/">imageboards.net</a></div>
+        <hr>
+        <div><a href="#">© 2021 Cabalchan Devs</a></div>
+    </div>
+
+    <div class="entry"  th:if="${previous} == null" th:fragment="reply" x-show="!reply">
+            <form th:action="@{/new}" method="post" enctype='multipart/form-data'>  
+                <input type="checkbox" name="spoiler">
+                <input type="hidden" name="parentid" th:value="${OP.id}">
+                <span class="label-body">Spoiler Images/Videos&nbsp;<i class="bi bi-camera-video-off-fill"></i></span>   
+                <input style="float:right;" class="button" type="submit" value="Submit">
+                <br><br>
+                <label for="flag">Flag(optional) <img x-bind:src="flag" /></label>
+                <select class="u-full-width" id="flag" x-model="flag" name="flag">
+                <option disabled selected value> -- select an option -- </option>
+                <th:block th:each="flag : ${flaglist}">
+                <option th:value="${flag.filename}" th:text="${flag.flagname}"></option>
+                </th:block>
+                </select>
+    
+                <label for="comment">Message</label>
+                <textarea class="u-full-width" id="comment" name="comment"></textarea>
+    
+                <label>
+                <input type="file"
+                id="attachment" name="attachment"
+                accept="image/png
+                ,image/jpeg 
+                ,image/gif 
+                ,video/mp4
+                ,video/webm
+                ,application/pdf
+                ,audio/wav
+                ,audio/ogg
+                ,audio/mpeg
+                ,application/zip">  
+                </label>
+            </form>
+    </div>
+    <div th:fragment="attachment">
+        <div th:if="${posts.attachment}">
+            
+            <div th:if="${posts.attachment.spoiler}" th:attr="x-data='{ cw : true }'">
+              <div class="cwtext" @click="cw = !cw">[ Content Warning - click to show/hide ]</div>
+              <div th:class="${posts.attachment.spoiler} ? cwbox : ''" x-show="!cw">
+                <img loading="lazy" th:if="${posts.attachment.filetype} == 'image/png'" th:src="'/' + ${posts.attachment.filename}" />
+                <img loading="lazy" th:if="${posts.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${posts.attachment.filename}" />
+                <img loading="lazy" th:if="${posts.attachment.filetype} == 'image/gif'" th:src="'/' + ${posts.attachment.filename}" />
+                <video th:if="${posts.attachment.filetype} == 'video/webm'" controls width="100%" preload="metadata">
+                  <source th:src="'/' + ${posts.attachment.filename}" type="video/webm">
+                </video>
+                <video th:if="${posts.attachment.filetype} == 'video/mp4'" controls width="100%" preload="metadata">
+                  <source th:src="'/' + ${posts.attachment.filename}" type="video/mp4">
+                </video>
+                <audio preload="none" th:if="${posts.attachment.filetype} == 'audio/mpeg'" controls th:src="'/' + ${posts.attachment.filename}"></audio>
+                <audio preload="none" th:if="${posts.attachment.filetype} == 'audio/ogg'" controls th:src="'/' + ${posts.attachment.filename}"></audio>
+                <audio preload="none" th:if="${posts.attachment.filetype} == 'audio/wav'" controls th:src="'/' + ${posts.attachment.filename}"></audio>
+                <a target="_blank" th:if="${posts.attachment.filetype} == 'application/pdf'" th:href="'/' + ${posts.attachment.filename}">
+                  <i class="bi bi-file-pdf"></i>
+                  <span th:text="${posts.attachment.filename}"></span>
+                </a>
+                <a target="_blank" th:if="${posts.attachment.filetype} == 'application/zip'" th:href="'/' + ${posts.attachment.filename}">
+                  <i class="bi bi-paperclip"></i>
+                  <span th:text="${posts.attachment.filename}"></span>
+                </a>
+              </div>
+            </div>
+
+            <div th:if="!${posts.attachment.spoiler}">
+                <img loading="lazy" th:if="${posts.attachment.filetype} == 'image/png'" th:src="'/' + ${posts.attachment.filename}" />
+                <img loading="lazy" th:if="${posts.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${posts.attachment.filename}" />
+                <img loading="lazy" th:if="${posts.attachment.filetype} == 'image/gif'" th:src="'/' + ${posts.attachment.filename}" />
+                <video th:if="${posts.attachment.filetype} == 'video/webm'" controls width="100%" preload="metadata">
+                  <source th:src="'/' + ${posts.attachment.filename}" type="video/webm">
+                </video>
+                <video th:if="${posts.attachment.filetype} == 'video/mp4'" controls width="100%" preload="metadata">
+                  <source th:src="'/' + ${posts.attachment.filename}" type="video/mp4">
+                </video>
+                <audio preload="none" th:if="${posts.attachment.filetype} == 'audio/mpeg'" controls th:src="'/' + ${posts.attachment.filename}"></audio>
+                <audio preload="none" th:if="${posts.attachment.filetype} == 'audio/ogg'" controls th:src="'/' + ${posts.attachment.filename}"></audio>
+                <audio preload="none" th:if="${posts.attachment.filetype} == 'audio/wav'" controls th:src="'/' + ${posts.attachment.filename}"></audio>
+                <a target="_blank" th:if="${posts.attachment.filetype} == 'application/pdf'" th:href="'/' + ${posts.attachment.filename}">
+                  <i class="bi bi-file-pdf"></i>
+                  <span th:text="${posts.attachment.filename}"></span>
+                </a>
+                <a target="_blank" th:if="${posts.attachment.filetype} == 'application/zip'" th:href="'/' + ${posts.attachment.filename}">
+                  <i class="bi bi-paperclip"></i>
+                  <span th:text="${posts.attachment.filename}"></span>
+                </a>
+            </div>
+
+          </div>
+    </div>
+</body>
+</html>

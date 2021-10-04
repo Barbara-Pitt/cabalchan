@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace = "fragments :: head"></head>
+  <body>
+	
+  <div class="container">
+    <div class="row">
+      <div class="three columns">
+        <div th:replace="fragments :: leftmenu"></div>
+      </div>
+      <div class="six columns entries">
+        <div class="entry">
+            <h4>News</h4>
+            <hr>
+        </div>
+        <div class="entry">
+          <hr>
+          Site Metrics
+          <hr>
+           <ul>
+               <li>PPH:&nbsp;<span th:text="${activepph}"></span></li>
+               <li>Active IPs (72h):&nbsp;<span th:text="${activeips}"></span></li>
+           </ul>
+        </div>
+        <div th:if="${news}" th:each="newsitem : ${news}" class="entry">
+          <div>
+            <span th:text="${#temporals.format(newsitem.createDate,'yyyy-MM-dd (EEE) HH:mm:ss')}"></span>
+            <span th:text="${newsitem.staff.username}"></span>
+          </div>
+          <span th:utext="${newsitem.blurb}"></span>
+        </div>
+      </div>
+      <div class="three columns">
+        <div th:replace="fragments :: sidemenu"></div>
+      </div>
+    </div>
+  </div>
+  </body>
+</html>

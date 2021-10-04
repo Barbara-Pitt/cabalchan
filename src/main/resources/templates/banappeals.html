@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace = "fragments :: head"></head>
+  <body>
+	
+  <div class="container">
+    <div class="row">
+      <div class="errorpage">
+          <h2>Bans</h2>
+          <p><a href="/"><i class="bi bi-arrow-left"></i>Home</a></p>
+          <hr>
+          <div class="banpage" th:if="${bans}" th:each="ban : ${bans}">
+              <div class="entry">
+                <p>Ban ID&nbsp;#<span th:text="${ban.id}"></span>&nbsp;/
+                    Reason:&nbsp;<span th:text="${ban.reason}"></span>&nbsp;/
+                    Expires:&nbsp;<span th:text="${#temporals.format(ban.expirationDate,'yyyy-MM-dd (EEE) HH:mm:ss')}"></span>
+                </p>
+                <form th:if="${ban.appeal} == null" th:action="@{/appeal}" method="POST">
+                    <input type="text" style="min-width: 50%;" name="justification">
+                    <input type="hidden" th:value="${ban.id}" name="banid">
+                    <input class="u-pull-right" type="submit" value="appeal">
+                    <div class="u-cf"></div>
+                </form>
+                <p th:if="${ban.appeal} != null">
+                    Appeal Status:&nbsp;
+                    <span th:if="${ban.appeal.appealStatus} == false">Appeal Denied</span>
+                    <span th:if="${ban.appeal.appealStatus} == true">Appeal Approved - Ban will be lifted shortly</span>
+                    <span th:if="${ban.appeal.appealStatus} == null">Pending Staff Decision</span>
+                </p>
+                <hr>
+                Post:<p th:utext="${ban.blurb}"></p>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  </body>
+</html>

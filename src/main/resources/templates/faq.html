@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace = "fragments :: head"></head>
+  <body>
+	
+  <div class="container">
+    <div class="row">
+      <div class="three columns">
+        <div th:replace="fragments :: leftmenu"></div>
+      </div>
+      <div class="six columns entries">
+        <div class="entry">
+            <h4>Frequently Asked Questions</h4>
+            <ol>
+                <li>What is Cabalchan?
+                    <p>Cabalchan is an anonymous internet forum where users can post text, images, videos, files, and more.</p>
+                </li>
+                <li>How does post formatting work?
+                    <p>
+                        &gt;text makes it a orangetext quote: <span class="quotetext">&gt;text.</span><br>
+                        ==text== makes it a redtext heading: <span class="redtext">text</span><br>
+                        **text** makes it spoiler: <span class="spoiler">text</span>
+                    </p>
+                </li>
+                <li>What attachment file types are supported?
+                  <ul>
+                    <li>Images - png, jpg/jpeg, gif</li>
+                    <li>Video - webm, mp4</li>
+                    <li>Files - pdf, zip</li>
+                    <li>Audio - mp3, ogg(vorbis), wav</li>
+                  </ul>
+                </li>
+                <li>
+                  What is the file upload limit?
+                  <p>Files may not be larger than 15MB.</p>
+                </li>
+            </ol> 
+        </div>
+      </div>
+      <div class="three columns">
+        <div th:replace="fragments :: sidemenu"></div>
+      </div>
+    </div>
+  </div>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace = "fragments :: head"></head>
+  <body>
+    
+  <div class="container">
+    <div class="row">
+        <div class="three columns">
+            <div class="sidemenu">
+                <p><a href="/mod/home">/mod menu/</a></p>
+            </div>
+        </div>
+      <div class="six columns entries">
+        <div class="entry">
+            <h4>News</h4>
+            <hr>
+        </div>
+        <div class="entry">
+            <form th:action="@{/mod/news}" method="POST">
+                <div><textarea id="news" name="news" style="min-width:100%;"></textarea></div>
+                <div><input type="submit" value="New Announcement"></div>
+            </form>
+        </div>
+      </div>
+
+      <div class="three columns">
+        <div th:replace="fragments :: sidemenu"></div>
+      </div>
+
+    </div>
+  </div>
+  </body>
+</html>

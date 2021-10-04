@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace = "fragments :: head"></head>
+  <body>
+	
+  <div class="container">
+    <div class="row">
+      <div class="three columns">
+        <div th:replace="fragments :: leftmenu"></div>
+      </div>
+      <div class="six columns entries">
+        <div class="entry">
+            <h4>Rules</h4>
+            <ol>
+              <li>No minors - you must be at least 18 years old or the age of majority in your country/area to use the site.</li>
+              <li>No illegal sex stuff - including CP, borderline CP, loli/shota and "suggestive" pictures. No 1k year old vampires. 
+                No pedophiles, pederasts, rapists, or other sex creeps.</li>
+              <li>No glowposting - firearms, explosives, militias, minecraft or minecraft-adjacent discussion. No posting or 
+                promotion of mass shooter manifestos. No credible threats of violence, or inciting imminent violence or lawlessness.</li>
+              <li>No shock pictures/videos - including gore/analgape/etc.</li>
+              <li>No spam - shilling of unrelated commerical, for profit entities, services or businesses.</li>
+              <li>No excessive trolling - bad faith and low effort slide posts, baiting, etc.</li>
+              <li>No unspoilered NSFW content - Spoiler all NSFW content.</li>
+              <li>No posting or threatening to post other people’s personally identifying information ("doxing").</li>
+              <li>No evading previous bans.</li>
+              <li><span class="redtext">No posting of anything else not covered above, that will potentially get this site yeeted. 
+                Site staff has broad authority and discretion to remove posts.</span>
+              </li>
+            </ol>
+        </div>
+        <div class="entry">
+          <h4>Disclaimers</h4>
+          <ul>
+            <li>The operator(s) of this website disavow all user generated content which may violate local, national, 
+              or international laws and will attempt to remove all prohibited content as quickly as possible. All posts 
+              are the responsibility of the individual poster and not the website's operator(s), pursuant to 47 U.S.C. § 230.</li>
+            <li>This site is not currently under investigation by any Federal, State, or Local Authorities.</li>
+          </ul>
+      </div>
+      </div>
+      <div class="three columns">
+        <div th:replace="fragments :: sidemenu"></div>
+      </div>
+    </div>
+  </div>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace = "fragments :: head"></head>
+  <body>
+	
+  <div class="container">
+    <div class="row">
+      <div class="nine columns entries">
+        <div class="entry">
+          <h4>Report Post #<span th:text="${entryId}"></span></h4>
+          <form th:if="${entryId}" method="POST" th:action="@{/report}">
+              <input type="hidden" name="entryid" th:value="${entryId}">
+              <input type="submit" value="Report Post">
+          </form>
+      </div>
+      </div>
+      <div class="three columns">
+        <div th:replace="fragments :: sidemenu"></div>
+      </div>
+    </div>
+  </div>
+  </body>
+</html>

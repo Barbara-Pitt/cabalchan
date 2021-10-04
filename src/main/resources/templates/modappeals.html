@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace = "fragments :: head"></head>
+  <body>
+	
+  <div class="container">
+    <div class="row">
+      <div class="three columns">
+        <div class="sidemenu">
+            <p><a href="/mod/home">/mod menu/</a></p>
+        </div>
+      </div>
+      <div class="six columns entries">
+        <div class="entry">
+            <h4>Ban Appeals</h4>
+            <hr>
+        </div>
+        <div th:each="appeal : ${appeals}" class="entry">
+            Ban #<span th:text="${appeal.ban.id}"></span>
+            Appeal Date: <span th:text="${#temporals.format(appeal.createDate,'yyyy-MM-dd (EEE) HH:mm:ss')}"></span>
+            <hr>
+            Justification: <span th:text="${appeal.comment}"></span>
+            <hr>
+            <p><form th:action="@{/mod/appeals}" method="POST">
+                <input type="hidden" th:value="${appeal.id}" name="appealid">
+                <input type="hidden" value="true" name="status">
+                <input type="submit" value="Approve Appeal">
+            </form></p>
+            <p><form th:action="@{/mod/appeals}" method="POST">
+                <input type="hidden" th:value="${appeal.id}" name="appealid">
+                <input type="hidden" value="false" name="status">
+                <input type="submit" value="Deny Appeal">
+            </form></p>
+        </div>
+      </div>
+
+      <div class="three columns">
+        <div th:replace="fragments :: sidemenu"></div>
+      </div>
+
+    </div>
+  </div>
+  </body>
+</html>

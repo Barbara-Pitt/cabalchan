@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace = "fragments :: head"></head>
+  <body>
+	
+  <div class="container">
+    <div class="row">
+        <div class="nine columns">
+            <div class="entry">
+                <h4>Login</h4>
+                <hr>
+                <p>
+                    <span th:if="${flashmsg}" th:text="${flashmsg}" class="quotetext"></span>
+                    <a href="/register">[ register new account here ]</a>
+                </p>
+                <form th:action="@{/auth/login}" method="POST">
+                    <p>
+                    <label for="usernameinput">Username</label>
+                    <input name="username" type="text" maxlength="30" id="usernameinput" required>
+                    <label for="passinput">Password</label>
+                    <input name="password" type="password" maxlength="255" id="passinput" required>
+                    </p>
+                    <input type="submit" value="Authenticate">
+                </form>
+            </div>
+        </div>
+        <div class="three columns">
+            <div th:replace="fragments :: sidemenu"></div>
+        </div>
+    </div>
+  </div>
+  </body>
+</html>
