@@ -20,5 +20,5 @@ The next step will be writing unit tests and integration tests, while ultimately
 5. Mod logs - Log all mod actions and make the modlog accessible.
 6. Highlight OP somehow or make it distinct from comments
 7. Add ban message to post when banned.
-8. Add ability to quote using '<' symbol as well, in a different color, possibly light purple.
+8. Add ability to quote using '<' symbol as well, in a different color, possibly light purple (#b294bb).
 9. Change ban lifting from 1 minute to instant
