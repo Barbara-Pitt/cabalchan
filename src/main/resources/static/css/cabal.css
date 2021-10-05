@@ -167,3 +167,11 @@ figure {
     padding: 0;
     max-width: max-content;
 }
+
+.clickable {
+    cursor: pointer;
+}
+
+.clickable:hover {
+    color: orange;
+}
