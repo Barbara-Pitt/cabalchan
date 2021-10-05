@@ -21,6 +21,12 @@
                 <div><input type="submit" value="New Announcement"></div>
             </form>
         </div>
+        <div class="entry">
+          <form th:action="@{/mod/removenews}" method="POST">
+              <p><input type="text" id="announcement" name="announcementid" style="min-width:100%;"></p>
+              <div><input type="submit" value="Delete Announcement (by id#)"></div>
+          </form>
+        </div>
       </div>
 
       <div class="three columns">

@@ -24,6 +24,7 @@
         </div>
         <div th:if="${news}" th:each="newsitem : ${news}" class="entry">
           <div>
+            <span th:text="'#' + ${newsitem.id}"></span>
             <span th:text="${#temporals.format(newsitem.createDate,'yyyy-MM-dd (EEE) HH:mm:ss')}"></span>
             <span th:text="${newsitem.staff.username}"></span>
           </div>

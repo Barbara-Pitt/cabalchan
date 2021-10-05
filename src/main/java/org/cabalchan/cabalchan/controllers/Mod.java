@@ -81,6 +81,15 @@ public class Mod {
         return "posthistory";
     }
 
+    @PostMapping("/removenews")
+    public String newsRemove(@RequestParam(name="announcementid") BigInteger announcementId){
+        Optional<News> newsItem = newsRepository.findById(announcementId);
+        if(newsItem.isPresent()){
+            newsRepository.delete(newsItem.get());
+        }
+        return "redirect:/news";
+    }
+
     @GetMapping("/news")
     public String news(){
         return "announcements";
