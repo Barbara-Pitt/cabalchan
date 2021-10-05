@@ -22,3 +22,5 @@ The next step will be writing unit tests and integration tests, while ultimately
 7. Add ban message to post when banned.
 8. Add ability to quote using '<' symbol as well, in a different color, possibly light purple (#b294bb).
 9. Change ban lifting from 1 minute to instant
+10. Ability to delete notifications
+11. Ability to delete announcements (mod)
