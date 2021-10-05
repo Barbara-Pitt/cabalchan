@@ -9,10 +9,10 @@
         <div th:replace="fragments :: leftmenu"></div>
       </div>
       <div class="six columns entries" x-data="{ reply : true , flag : '' }">
-        <div class="entry" th:if="${previous} == null">
+        <div class="entry op" th:if="${previous} == null">
             <div>
                 <a th:if="${OP.parent} != null" th:href="'/entry?entryid=' + ${OP.parent.id}"><i class="bi bi-arrow-90deg-up"></i></a>
-                <span th:text="'#' + ${OP.id}"></span>
+                <span @click="reply = !reply" th:text="'#' + ${OP.id}" class="reply"></span>
                 <img th:title="${OP.flag.flagname}" th:if="${OP.flag}" th:src="${OP.flag.filename}" alt="flag" />
                 <span th:text="${#temporals.format(OP.createDate,'yyyy-MM-dd (EEE) HH:mm:ss')}">&nbsp;</span>
                 </div>
@@ -93,7 +93,7 @@
         <!-- replies -->
         <div th:each="posts : ${entries}" class="entry">
           <div>
-            <span th:text="'#' + ${posts.id}"></span>
+            <a th:href="'/entry?entryid=' + ${posts.id}"><span th:text="'#' + ${posts.id}"></span></a>
             <img th:title="${posts.flag.flagname}" th:if="${posts.flag}" th:src="${posts.flag.filename}" alt="flag" />
             <span th:text="${#temporals.format(posts.createDate,'yyyy-MM-dd (EEE) HH:mm:ss')}"></span>
 

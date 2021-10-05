@@ -156,3 +156,8 @@ audio {
     color: orange;
     font-size: large;
 }
+
+.op {
+    border-bottom: 1px solid darkorange;
+    border-top: 1px solid darkorange;
+}
