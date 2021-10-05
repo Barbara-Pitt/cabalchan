@@ -116,7 +116,7 @@ public class Mod {
                 var appealNew = appeal.get();
                 appealNew.setAppealStatus(true);
                 var appealBan = appealNew.getBan();
-                appealBan.setExpirationDate(LocalDateTime.now().plusMinutes(1));
+                appealBan.setExpirationDate(LocalDateTime.now());
                 banRepository.save(appealBan);
                 appealRepository.save(appealNew);
             } else {
