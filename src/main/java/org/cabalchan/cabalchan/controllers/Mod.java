@@ -264,6 +264,19 @@ public class Mod {
                         b.setCreateDate(LocalDateTime.now());
                         b.setBlurb(e.getComment());
                         banRepository.save(b);
+
+                        //add message to entry
+                        String message = "<span class=\"modcomment\">"
+                        + "<i class=\"bi bi-exclamation-triangle-fill\"></i> user has been banned for this post</span><br>";
+                        if (banReason.isPresent()){
+                            message = "<span class=\"modcomment\">"
+                            + "<i class=\"bi bi-exclamation-triangle-fill\"></i> User banned for: "
+                            + banReason.get()
+                            +"</span><br>";
+                        } 
+                        e.setComment(message + e.getComment());
+                        entryRepository.save(e);
+
                         reportRepository.delete(report);
                     }
                 } else if (actionType.equals("bananddelete")){
