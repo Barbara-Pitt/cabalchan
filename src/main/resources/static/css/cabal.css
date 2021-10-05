@@ -161,3 +161,9 @@ audio {
     border-bottom: 1px solid darkorange;
     border-top: 1px solid darkorange;
 }
+
+figure {
+    margin:0;
+    padding: 0;
+    max-width: max-content;
+}

@@ -28,9 +28,18 @@
                 <div th:if="${entry.attachment.spoiler}" th:attr="x-data='{ cw : true }'">
                   <div class="cwtext" @click="cw = !cw">[ Content Warning - click to show/hide ]</div>
                   <div th:class="${entry.attachment.spoiler} ? cwbox : ''" x-show="!cw">
-                    <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/png'" th:src="'/' + ${entry.attachment.filename}" />
-                    <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${entry.attachment.filename}" />
-                    <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/gif'" th:src="'/' + ${entry.attachment.filename}" />
+                    <div th:if="${entry.attachment.filter}">
+                      <figure th:class="${entry.attachment.filter.cssclass}">
+                        <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/png'" th:src="'/' + ${entry.attachment.filename}" />
+                        <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${entry.attachment.filename}" />
+                        <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/gif'" th:src="'/' + ${entry.attachment.filename}" />
+                      </figure>
+                    </div>
+                    <div th:if="!${entry.attachment.filter}">
+                      <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/png'" th:src="'/' + ${entry.attachment.filename}" />
+                      <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${entry.attachment.filename}" />
+                      <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/gif'" th:src="'/' + ${entry.attachment.filename}" />
+                    </div>
                     <video th:if="${entry.attachment.filetype} == 'video/webm'" controls width="100%" preload="metadata">
                       <source th:src="'/' + ${entry.attachment.filename}" type="video/webm">
                     </video>
@@ -52,9 +61,18 @@
                 </div>
                 
                 <div th:if="!${entry.attachment.spoiler}">
-                    <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/png'" th:src="'/' + ${entry.attachment.filename}" />
-                    <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${entry.attachment.filename}" />
-                    <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/gif'" th:src="'/' + ${entry.attachment.filename}" />
+                    <div th:if="${entry.attachment.filter}">
+                      <figure th:class="${entry.attachment.filter.cssclass}">
+                        <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/png'" th:src="'/' + ${entry.attachment.filename}" />
+                        <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${entry.attachment.filename}" />
+                        <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/gif'" th:src="'/' + ${entry.attachment.filename}" />
+                      </figure>
+                    </div>
+                    <div th:if="!${entry.attachment.filter}">
+                      <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/png'" th:src="'/' + ${entry.attachment.filename}" />
+                      <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${entry.attachment.filename}" />
+                      <img loading="lazy" th:if="${entry.attachment.filetype} == 'image/gif'" th:src="'/' + ${entry.attachment.filename}" />
+                    </div>
                     <video th:if="${entry.attachment.filetype} == 'video/webm'" controls width="100%" preload="metadata">
                       <source th:src="'/' + ${entry.attachment.filename}" type="video/webm">
                     </video>
