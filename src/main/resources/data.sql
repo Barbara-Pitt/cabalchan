@@ -96,3 +96,34 @@ values
 ,('/flags/ypg.png','image/png','YPG')
 ,('/flags/yugoslavia.png','image/png','Yugoslavia')
 ,('/flags/zapatista.png','image/png','Zapatista') ON CONFLICT DO NOTHING;
+
+
+--insert into flags
+insert into filters (filtername,cssclass) 
+values 
+('1977','_1977')
+,('Aden','aden')
+,('Amaro', 'amaro')
+,('Brannan', 'brannan')
+,('Brooklyn', 'brooklyn')
+,('Clarendon', 'clarendon')
+,('Gingham', 'gingham')
+,('Hudson', 'hudson')
+,('Inkwell', 'inkwell')
+,('Kelvin', 'kelvin')
+,('Lark', 'lark')
+,('Lo-fi', 'lofi')
+,('Mayfair', 'mayfair')
+,('Moon', 'moon')
+,('Nashville', 'nashville')
+,('Perpetua', 'perpetua')
+,('Reyes', 'reyes')
+,('Rise', 'rise')
+,('Slumber', 'slumber')
+,('Stinson', 'stinson')
+,('Toaster', 'toaster')
+,('Valencia', 'valencia')
+,('Walden', 'walden')
+,('Willow', 'willow')
+,('X-Pro-2', 'xpro2') ON CONFLICT DO NOTHING;
+

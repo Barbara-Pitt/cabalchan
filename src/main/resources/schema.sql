@@ -17,12 +17,21 @@ CREATE TABLE if not exists entries(
     ,create_dt timestamp without time zone not null
 );
 
+CREATE TABLE if not exists filters(
+    id BIGSERIAL PRIMARY KEY
+    ,cssclass text not null
+    ,filtername text not NULL
+    ,unique(cssclass)
+    ,unique(filtername)
+);
+
 CREATE TABLE if not exists attachments(
     id BIGSERIAL PRIMARY KEY
     ,entry_id bigint references entries(id)
     ,filename text not null
     ,filetype text not null
     ,spoiler boolean not null
+    ,filter_id bigint references filters(id)
     ,unique(filename)
 );
 

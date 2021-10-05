@@ -13,6 +13,7 @@ import org.cabalchan.cabalchan.entities.Appeal;
 import org.cabalchan.cabalchan.entities.Attachment;
 import org.cabalchan.cabalchan.entities.Ban;
 import org.cabalchan.cabalchan.entities.Entry;
+import org.cabalchan.cabalchan.entities.Filter;
 import org.cabalchan.cabalchan.entities.Flag;
 import org.cabalchan.cabalchan.entities.Notification;
 import org.cabalchan.cabalchan.entities.Report;
@@ -20,6 +21,7 @@ import org.cabalchan.cabalchan.repositories.AppealRepository;
 import org.cabalchan.cabalchan.repositories.AttachmentRepository;
 import org.cabalchan.cabalchan.repositories.BanRepository;
 import org.cabalchan.cabalchan.repositories.EntryRepository;
+import org.cabalchan.cabalchan.repositories.FilterRepository;
 import org.cabalchan.cabalchan.repositories.FlagRepository;
 import org.cabalchan.cabalchan.repositories.NewsRepository;
 import org.cabalchan.cabalchan.repositories.NotificationRepository;
@@ -80,6 +82,9 @@ public class Main {
 
     @Autowired
     private NewsRepository newsRepository;
+
+    @Autowired
+    private FilterRepository filterRepository;
     
     @GetMapping("")
     public String index(HttpServletRequest request, Model model
@@ -125,6 +130,10 @@ public class Main {
         } else {
             List<Flag> flags = flagRepository.findAll();       
             model.addAttribute("flaglist", flags);
+
+            List<Filter> filters = filterRepository.findAll();       
+            model.addAttribute("filterlist", filters);
+
             model.addAttribute("next",1);
             model.addAttribute("entries", entryRepository.entriesPage(p.get(), PageRequest.of(0,25)));
         } 
@@ -231,12 +240,17 @@ public class Main {
 
         List<Flag> flags = flagRepository.findAll();       
         model.addAttribute("flaglist", flags);
+
+        List<Filter> filters = filterRepository.findAll();       
+        model.addAttribute("filterlist", filters);
+
         return "newentry";
     }
 
     @PostMapping("new")
     public String makeEntry(@RequestParam("spoiler") Optional<String> spoiler
                             ,@RequestParam("flag") Optional<String> flag
+                            ,@RequestParam("filter") Optional<BigInteger> filter
                             ,@RequestParam("parentid") Optional<BigInteger> parent
                             ,@RequestParam("comment") String comment
                             ,@RequestParam("attachment") Optional<MultipartFile> file){
@@ -278,6 +292,7 @@ public class Main {
             Flag f = flagRepository.findByFilename(flag.get());
             entry.setFlag(f);
         }
+
         if(file.isPresent() && !file.get().isEmpty()){
             final List<String> contentTypes = Arrays.asList(
             "image/png"
@@ -310,6 +325,13 @@ public class Main {
                     attached.setEntry(entry);
                     attached.setFilename(newFileName + "." + fileExt);
                     attached.setFiletype(fileContentType);
+
+                    if (filter.isPresent()){
+                        Optional<Filter> f = filterRepository.findById(filter.get());
+                        if (f.isPresent()){
+                            attached.setFilter(f.get());
+                        }
+                    }
                     
                     //set spoiler
                     if (spoiler.isPresent() 

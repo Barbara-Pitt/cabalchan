@@ -22,6 +22,15 @@
           </th:block>
           </select>
 
+          <br>
+          <label for="filter">Filter(optional - image) </label>
+          <select class="u-full-width" id="filter" name="filter">
+          <option disabled selected value> -- select an option -- </option>
+          <th:block th:each="filter : ${filterlist}">
+            <option th:value="${filter.id}" th:text="${filter.filtername}"></option>
+          </th:block>
+          </select>
+
           <label for="comment">Message</label>
           <textarea class="u-full-width" id="comment" name="comment"></textarea>
 

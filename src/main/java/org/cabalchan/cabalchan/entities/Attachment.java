@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.persistence.ManyToOne;
 
 import lombok.Data;
 
@@ -41,4 +42,8 @@ public class Attachment {
 
     @NotNull
     private Boolean spoiler;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="filter_id")
+    private Filter filter;
 }

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/skeleton.css">
     <link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/cabal.css">
+    <link rel="stylesheet" href="/css/cssgram.min.css">
     <script src="/js/alpine.min.js" defer></script>
 </head>
 <body>
@@ -50,6 +51,15 @@
                 <option disabled selected value> -- select an option -- </option>
                 <th:block th:each="flag : ${flaglist}">
                 <option th:value="${flag.filename}" th:text="${flag.flagname}"></option>
+                </th:block>
+                </select>
+
+                <br>
+                <label for="filter">Filter(optional - image) </label>
+                <select class="u-full-width" id="filter" name="filter">
+                <option disabled selected value> -- select an option -- </option>
+                <th:block th:each="filter : ${filterlist}">
+                  <option th:value="${filter.id}" th:text="${filter.filtername}"></option>
                 </th:block>
                 </select>
     
