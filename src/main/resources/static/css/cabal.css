@@ -41,6 +41,10 @@ body {
     color:darkorange;
 }
 
+.purptext {
+    color:#b294bb;
+}
+
 .redtext {
     color: red;
     font-size: large;

@@ -11,8 +11,10 @@ public class CommentUtil {
         result = result.replaceAll("(?:https://)?(?:www\\.)?(?:youtube\\.com)(?:/watch\\?v=)([^\\s]*)", "[youtube]$1[embed][/byoutube]$1[/youtube]");
         //hyperlink replacement
         result = result.replaceAll("\\b(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]", "[link]$0[/blink]$0[/link]");
+        //purptext replacement
+        result = result.replaceAll("(^|[\\n\\r])(<)([^\\n\\r$]*)", "[purptext]$1&lt;$3[/purptext]");
         //quotetext replacement
-        result = result.replaceAll("(^|[\\n\\r])(>)([^\\n\\r$]*)", "[quotetext]$1$2$3[/quotetext]");
+        result = result.replaceAll("(^|[\\n\\r])(>)([^\\n\\r$]*)", "[quotetext]$1&gt;$3[/quotetext]");
         //red replacement
         result = result.replaceAll("==(.*?)==", "[redtext]$1[/redtext]");
         //spoiler replacement
@@ -40,6 +42,9 @@ public class CommentUtil {
 
         //final replacement quotetext
         result = result.replaceAll("\\[quotetext\\](.*?)\\[/quotetext\\]", "<span class='quotetext'>$1</span>");
+
+        //final replacement purptext
+        result = result.replaceAll("\\[purptext\\](.*?)\\[/purptext\\]", "<span class='purptext'>$1</span>");
 
         //final replacement redtxt
         result = result.replaceAll("\\[redtext\\](.*?)\\[/redtext\\]", "<span class='redtext'>$1</span>");
