@@ -9,22 +9,20 @@
         <div th:replace="fragments :: leftmenu"></div>
       </div>
       <div class="six columns entry" x-data="{ flag : '' }">
-        <form th:action="@{/new}" method="post" enctype='multipart/form-data'>  
+        <form th:action="@{/new}" method="post" enctype='multipart/form-data' th:attr="x-data='{ showflag : true , showfilter : true }'">  
           <input type="checkbox" name="spoiler">
           <span class="label-body">Spoiler Images/Videos&nbsp;<i class="bi bi-camera-video-off-fill"></i></span>   
           <input style="float:right;" class="button" type="submit" value="Submit">
           <br><br>
-          <label for="flag">Flag(optional) <img x-bind:src="flag" /></label>
-          <select class="u-full-width" id="flag" x-model="flag" name="flag">
+          <label class="clickable" @click="showflag = !showflag" for="flag">Flag(optional) <img x-bind:src="flag" /></label>
+          <select x-show="!showflag" class="u-full-width" id="flag" x-model="flag" name="flag">
           <option disabled selected value> -- select an option -- </option>
           <th:block th:each="flag : ${flaglist}">
             <option th:value="${flag.filename}" th:text="${flag.flagname}"></option>
           </th:block>
           </select>
-
-          <br>
-          <label for="filter">Filter(optional - image) </label>
-          <select class="u-full-width" id="filter" name="filter">
+          <label class="clickable" @click="showfilter = !showfilter" for="filter">Filter(optional - image) </label>
+          <select x-show="!showfilter" class="u-full-width" id="filter" name="filter">
           <option disabled selected value> -- select an option -- </option>
           <th:block th:each="filter : ${filterlist}">
             <option th:value="${filter.id}" th:text="${filter.filtername}"></option>
