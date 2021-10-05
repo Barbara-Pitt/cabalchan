@@ -33,6 +33,10 @@ public class CabalErrorController implements ErrorController  {
                 model.addAttribute("errormsg", "500 - Internal Error");
                 return "customerror";
             }
+            else if(statusCode == HttpStatus.BAD_REQUEST.value()) {
+                model.addAttribute("errormsg", "400 - Bad Request");
+                return "customerror";
+            }
             else if(statusCode == HttpStatus.FORBIDDEN.value()) {
                 model.addAttribute("errormsg", "403 - Forbidden");
                 model.addAttribute("banned"
@@ -41,6 +45,6 @@ public class CabalErrorController implements ErrorController  {
                 return "customerror";
             }
         }
-        return "error";
+        return "customerror";
     }
 }
