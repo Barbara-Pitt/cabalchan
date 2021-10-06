@@ -7,6 +7,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAmount;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,14 +29,19 @@ import org.cabalchan.cabalchan.repositories.NotificationRepository;
 import org.cabalchan.cabalchan.repositories.ReportRepository;
 import org.cabalchan.cabalchan.repositories.UserRepository;
 import org.cabalchan.cabalchan.utilities.CommentUtil;
+import org.cabalchan.cabalchan.utilities.TimeUtil;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Safelist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
 
 @Controller
 @RequestMapping("/mod")
@@ -143,7 +150,8 @@ public class Mod {
                             ,@RequestParam("actiontype") String actionType
                             ,@RequestParam("reportids[]") Optional<List<BigInteger>> reportIds
                             ,@RequestParam("banlength") Optional<Integer> banLength
-                            ,@RequestParam("banreason") Optional<String> banReason){
+                            ,@RequestParam("banreason") Optional<String> banReason
+                            ,@RequestParam("banlengthcustom") Optional<String> banLengthCustom){
         if (reportIds.isPresent()){
             List<Report> r = reportRepository.findAllById(reportIds.get());
             for (Report report : r){
@@ -236,30 +244,39 @@ public class Mod {
                             b.setReason("Other");
                         }
                         b.setIpaddr(e.getIpaddr());
-                        if (banLength.isPresent()){
-                            Integer bannedFor = banLength.get();
-                            switch (bannedFor) {
-                                case 1:  b.setExpirationDate(LocalDateTime.now().plusMinutes(5));
-                                         break;
-                                case 2:  b.setExpirationDate(LocalDateTime.now().plusHours(3));
-                                         break;
-                                case 3:  b.setExpirationDate(LocalDateTime.now().plusDays(1));
-                                         break;
-                                case 4:  b.setExpirationDate(LocalDateTime.now().plusDays(3));
-                                         break;
-                                case 5:  b.setExpirationDate(LocalDateTime.now().plusDays(7));
-                                         break;
-                                case 6:  b.setExpirationDate(LocalDateTime.now().plusDays(14));
-                                         break;
-                                case 7:  b.setExpirationDate(LocalDateTime.now().plusDays(30));
-                                         break;
-                                case 8:  b.setExpirationDate(LocalDateTime.now().plusYears(100));
-                                         break;
-                                default: b.setExpirationDate(LocalDateTime.now().plusDays(3));
-                                         break;
+                        if(banLengthCustom.isPresent() && !banLengthCustom.get().isBlank()){
+                            try {
+                                TemporalAmount customBanLength = TimeUtil.parse(Jsoup.clean(banLengthCustom.get(),Safelist.none()));
+                                b.setExpirationDate(LocalDateTime.now().plus(customBanLength));
+                            } catch (DateTimeParseException ex){
+                                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrectly formatted date for custom ban length");
                             }
                         } else {
-                            b.setExpirationDate(LocalDateTime.now().plusDays(3));
+                            if (banLength.isPresent()){
+                                Integer bannedFor = banLength.get();
+                                switch (bannedFor) {
+                                    case 1:  b.setExpirationDate(LocalDateTime.now().plusMinutes(5));
+                                             break;
+                                    case 2:  b.setExpirationDate(LocalDateTime.now().plusHours(3));
+                                             break;
+                                    case 3:  b.setExpirationDate(LocalDateTime.now().plusDays(1));
+                                             break;
+                                    case 4:  b.setExpirationDate(LocalDateTime.now().plusDays(3));
+                                             break;
+                                    case 5:  b.setExpirationDate(LocalDateTime.now().plusDays(7));
+                                             break;
+                                    case 6:  b.setExpirationDate(LocalDateTime.now().plusDays(14));
+                                             break;
+                                    case 7:  b.setExpirationDate(LocalDateTime.now().plusDays(30));
+                                             break;
+                                    case 8:  b.setExpirationDate(LocalDateTime.now().plusYears(100));
+                                             break;
+                                    default: b.setExpirationDate(LocalDateTime.now().plusDays(3));
+                                             break;
+                                }
+                            } else {
+                                b.setExpirationDate(LocalDateTime.now().plusDays(3));
+                            }
                         }
                         b.setCreateDate(LocalDateTime.now());
                         b.setBlurb(e.getComment());
@@ -291,30 +308,39 @@ public class Mod {
                             b.setReason("Other");
                         }
                         b.setIpaddr(e.getIpaddr());
-                        if (banLength.isPresent()){
-                            Integer bannedFor = banLength.get();
-                            switch (bannedFor) {
-                                case 1:  b.setExpirationDate(LocalDateTime.now().plusMinutes(5));
-                                         break;
-                                case 2:  b.setExpirationDate(LocalDateTime.now().plusHours(3));
-                                         break;
-                                case 3:  b.setExpirationDate(LocalDateTime.now().plusDays(1));
-                                         break;
-                                case 4:  b.setExpirationDate(LocalDateTime.now().plusDays(3));
-                                         break;
-                                case 5:  b.setExpirationDate(LocalDateTime.now().plusDays(7));
-                                         break;
-                                case 6:  b.setExpirationDate(LocalDateTime.now().plusDays(14));
-                                         break;
-                                case 7:  b.setExpirationDate(LocalDateTime.now().plusDays(30));
-                                         break;
-                                case 8:  b.setExpirationDate(LocalDateTime.now().plusYears(100));
-                                         break;
-                                default: b.setExpirationDate(LocalDateTime.now().plusDays(3));
-                                         break;
+                        if(banLengthCustom.isPresent() && !banLengthCustom.get().isBlank()){
+                            try {
+                                TemporalAmount customBanLength = TimeUtil.parse(Jsoup.clean(banLengthCustom.get(),Safelist.none()));
+                                b.setExpirationDate(LocalDateTime.now().plus(customBanLength));
+                            } catch (DateTimeParseException ex){
+                                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrectly formatted date for custom ban length");
                             }
                         } else {
-                            b.setExpirationDate(LocalDateTime.now().plusDays(3));
+                            if (banLength.isPresent()){
+                                Integer bannedFor = banLength.get();
+                                switch (bannedFor) {
+                                    case 1:  b.setExpirationDate(LocalDateTime.now().plusMinutes(5));
+                                             break;
+                                    case 2:  b.setExpirationDate(LocalDateTime.now().plusHours(3));
+                                             break;
+                                    case 3:  b.setExpirationDate(LocalDateTime.now().plusDays(1));
+                                             break;
+                                    case 4:  b.setExpirationDate(LocalDateTime.now().plusDays(3));
+                                             break;
+                                    case 5:  b.setExpirationDate(LocalDateTime.now().plusDays(7));
+                                             break;
+                                    case 6:  b.setExpirationDate(LocalDateTime.now().plusDays(14));
+                                             break;
+                                    case 7:  b.setExpirationDate(LocalDateTime.now().plusDays(30));
+                                             break;
+                                    case 8:  b.setExpirationDate(LocalDateTime.now().plusYears(100));
+                                             break;
+                                    default: b.setExpirationDate(LocalDateTime.now().plusDays(3));
+                                             break;
+                                }
+                            } else {
+                                b.setExpirationDate(LocalDateTime.now().plusDays(3));
+                            }
                         }
                         b.setCreateDate(LocalDateTime.now());
                         b.setBlurb(e.getComment());
