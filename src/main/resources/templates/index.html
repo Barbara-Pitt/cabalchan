@@ -22,7 +22,7 @@
             <a th:href="'/entry?entryid=' + ${posts.id}"><i class="bi bi-chat-fill"></i>&nbsp;<span th:text="${#lists.size(posts.replies)}"></span>&nbsp;Comments</a>
             <span class="u-pull-right report">
               <small>
-              <a target="_blank" th:href="'/report?entryid='+ ${posts.id}"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;Report</a>
+              <a th:href="'/report?entryid='+ ${posts.id}"><i class="bi bi-exclamation-triangle-fill"></i>&nbsp;Report</a>
               </small>
             </span>
             <div class="u-cf"></div>
