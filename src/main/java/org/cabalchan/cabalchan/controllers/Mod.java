@@ -192,7 +192,7 @@ public class Mod {
                         n.setEntry(e);
                         n.setMessageType("warning");
                         n.setSeen(false);
-                        n.setSessionId(e.getSessionId());
+                        n.setCabalUUID(e.getCabalUUID());
                         notificationRepository.save(n);
                     }
                     

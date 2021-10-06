@@ -42,7 +42,7 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
             .logout()
-                .invalidateHttpSession(false)
+                .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"));
     }

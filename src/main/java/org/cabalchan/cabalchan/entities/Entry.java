@@ -48,8 +48,8 @@ public class Entry {
     private String ipaddr;
 
     @NotBlank
-    @Column(name="sessionid")
-    private String sessionId;
+    @Column(name="cabaluuid")
+    private String cabalUUID;
 
     private String comment;
 

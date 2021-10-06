@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
@@ -35,11 +36,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -87,11 +88,11 @@ public class Main {
     private FilterRepository filterRepository;
     
     @GetMapping("")
-    public String index(HttpServletRequest request, Model model
+    public String index(@CookieValue(name="cabaluuid", required = false) Optional<Cookie> cabaluuid, Model model
     ,@RequestParam("page") Optional<Integer> page){
 
         //notifications
-        model.addAttribute("notificationCount", notificationService.getCount(request));
+        model.addAttribute("notificationCount", notificationService.getCount(cabaluuid));
 
         if(page.isPresent() && (page.get() > 0)){
             model.addAttribute("previous",page.get()-1);
@@ -106,19 +107,18 @@ public class Main {
 
     @GetMapping("/entry")
     public String entry(Model model
-    ,HttpServletRequest request 
+    ,@CookieValue(name="cabaluuid", required = false) Optional<Cookie> cabaluuid
     ,@RequestParam("entryid") BigInteger entryId
     ,@RequestParam("page") Optional<Integer> page){
 
         //notifications
-        model.addAttribute("notificationCount", notificationService.getCount(request));
+        model.addAttribute("notificationCount", notificationService.getCount(cabaluuid));
 
         Optional<Entry> p = entryRepository.findById(entryId);
         if(!p.isPresent()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Entry Not Found");
         }
         model.addAttribute("OP", p.get());
-        model.addAttribute("youid", request.getSession(false));
         //old post?
         Boolean old = p.get().getCreateDate().isBefore(LocalDateTime.now().minusDays(7));
         model.addAttribute("oldOP", old);
@@ -141,28 +141,28 @@ public class Main {
     }
     
     @GetMapping("faq")
-    public String faq(HttpServletRequest request, Model model){
+    public String faq(@CookieValue(name="cabaluuid", required = false) Optional<Cookie> cabaluuid, Model model){
 
         //notifications
-        model.addAttribute("notificationCount", notificationService.getCount(request));
+        model.addAttribute("notificationCount", notificationService.getCount(cabaluuid));
 
         return "faq";
     }
 
     @GetMapping("rules")
-    public String rules(HttpServletRequest request, Model model){
+    public String rules(@CookieValue(name="cabaluuid", required = false) Optional<Cookie> cabaluuid, Model model){
 
         //notifications
-        model.addAttribute("notificationCount", notificationService.getCount(request));
+        model.addAttribute("notificationCount", notificationService.getCount(cabaluuid));
 
         return "rules";
     }
 
     @GetMapping("news")
-    public String news(HttpServletRequest request, Model model){
+    public String news(@CookieValue(name="cabaluuid", required = false) Optional<Cookie> cabaluuid, Model model){
 
         //notifications
-        model.addAttribute("notificationCount", notificationService.getCount(request));
+        model.addAttribute("notificationCount", notificationService.getCount(cabaluuid));
 
         Integer activeIP = entryRepository.activeAddressCount(LocalDateTime.now().minusDays(3));
         Integer activePPH = entryRepository.activePPH(LocalDateTime.now().minusHours(1));
@@ -198,29 +198,28 @@ public class Main {
     }
 
     @GetMapping("notifications")
-    public String notifications(HttpServletRequest request, Model model){
+    public String notifications(@CookieValue(name="cabaluuid", required = false) Optional<Cookie> cabaluuid, Model model){
 
         //delete old notifications
         notificationRepository.deleteAllInBatch(notificationRepository.oldNotifications(LocalDateTime.now().minusDays(7)));
 
-        var session = request.getSession(false);
         model.addAttribute("notificationCount", "viewing");
 
-        if (session != null){
-            var s = RequestContextHolder.currentRequestAttributes().getSessionId();
-            model.addAttribute("notifications", notificationRepository.latestNotifications(s,PageRequest.of(0,30)));
+        if (cabaluuid.isPresent()){
+            model.addAttribute("notifications", notificationRepository.latestNotifications(cabaluuid.get().getValue(),PageRequest.of(0,30)));
         }
         
         return "notifications";
     }
 
     @GetMapping("notif")
-    public String notif(@RequestParam("notifid") BigInteger notificationId){
+    public String notif(@RequestParam("notifid") BigInteger notificationId
+    ,@CookieValue(name="cabaluuid", required = false) Optional<Cookie> cabaluuid){
         Optional<Notification> n = notificationRepository.findById(notificationId);
-        if (n.isPresent()){
+        if (n.isPresent() && cabaluuid.isPresent()){
             Notification notif = n.get();
-            //check to see user's current session id is the same as the session id for that notification
-            if(RequestContextHolder.currentRequestAttributes().getSessionId().equals(notif.getSessionId())){
+            //check to see user's current cookie id is the same as the cookie id for that notification
+            if(notif.getCabalUUID().equals(cabaluuid.get().getValue())){
                 notif.setSeen(true);
                 notificationRepository.save(notif);
                 return "redirect:/entry?entryid=" + notif.getEntry().getId();
@@ -233,10 +232,10 @@ public class Main {
     }
 
     @GetMapping("new")
-    public String entry(HttpServletRequest request, Model model){
+    public String entry(@CookieValue(name="cabaluuid", required = false) Optional<Cookie> cabaluuid, Model model){
 
         //notifications
-        model.addAttribute("notificationCount", notificationService.getCount(request));
+        model.addAttribute("notificationCount", notificationService.getCount(cabaluuid));
 
         List<Flag> flags = flagRepository.findAll();       
         model.addAttribute("flaglist", flags);
@@ -253,7 +252,9 @@ public class Main {
                             ,@RequestParam("filter") Optional<BigInteger> filter
                             ,@RequestParam("parentid") Optional<BigInteger> parent
                             ,@RequestParam("comment") String comment
-                            ,@RequestParam("attachment") Optional<MultipartFile> file){
+                            ,@RequestParam("attachment") Optional<MultipartFile> file
+                            ,@CookieValue(name="cabaluuid", required = false) Optional<Cookie> cabaluuid
+                            ,HttpServletResponse response){
 
         Integer banned = banRepository.activeBans(
             IPUtil.getClientIpAddressIfServletRequestExist(), LocalDateTime.now());
@@ -265,7 +266,18 @@ public class Main {
         entry.setComment(CommentUtil.process(comment));
         entry.setCreateDate(LocalDateTime.now());
         entry.setIpaddr(IPUtil.getClientIpAddressIfServletRequestExist());
-        entry.setSessionId(RequestContextHolder.currentRequestAttributes().getSessionId());
+        //notifications cookie
+        if (cabaluuid.isPresent()){
+            entry.setCabalUUID(cabaluuid.get().getValue());
+        } else {
+            String cabalid = UUID.randomUUID().toString();
+            Cookie cookie = new Cookie("cabaluuid", cabalid);
+            cookie.setMaxAge(7 * 24 * 60 * 60); // 7 days
+            cookie.setHttpOnly(true);
+            response.addCookie(cookie);
+            entry.setCabalUUID(cabalid);
+        }
+        //end notifications cookie
         if(parent.isPresent()){
             Entry p = entryRepository.getById(parent.get());
 
@@ -280,7 +292,7 @@ public class Main {
             Notification n = new Notification();
 
             n.setCreateDate(LocalDateTime.now());
-            n.setSessionId(p.getSessionId());
+            n.setCabalUUID(p.getCabalUUID());
             n.setMessageType("reply");
             n.setSeen(false);
             n.setEntry(p);

@@ -12,7 +12,7 @@ CREATE TABLE if not exists entries(
     ,parent_id bigint references entries(id)
     ,flag_id bigint references flags(id)
     ,ipaddr text not null
-    ,sessionid text not null
+    ,cabaluuid text not null
     ,comment text
     ,create_dt timestamp without time zone not null
 );
@@ -38,7 +38,7 @@ CREATE TABLE if not exists attachments(
 CREATE TABLE if not exists notifications(
     id BIGSERIAL PRIMARY KEY
     ,entry_id bigint not null references entries(id)
-    ,sessionid text not null
+    ,cabaluuid text not null
     ,seen boolean not null
     ,msgtype text not null
     ,create_dt timestamp without time zone not null

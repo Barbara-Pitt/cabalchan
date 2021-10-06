@@ -30,8 +30,8 @@ public class Notification {
     @JoinColumn(name="entry_id")
     private Entry entry;
 
-    @Column(name="sessionid")
-    private String sessionId;
+    @Column(name="cabaluuid")
+    private String cabalUUID;
 
     @NotNull
     private Boolean seen;
