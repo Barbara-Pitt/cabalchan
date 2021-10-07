@@ -34,7 +34,7 @@ public class NotificationsController {
             model.addAttribute("notifications", notificationRepository.latestNotifications(cabaluuid.get().getValue(),PageRequest.of(0,30)));
         }
         
-        return "/notifications";
+        return "notifications";
     }
 
     @GetMapping("notif")
