@@ -28,6 +28,7 @@ The next step will be writing unit tests and integration tests, while ultimately
 7. Refactored main controller into into smaller controllers
 8. Modified hyperlink regex to allow parens
 9. Modified application properties to allow caching of statics
+10. Updated cookie/user uuid to last for 365 days max
 
 ## Updates (October 6, 2021)
 1. Ability to show/hide filter and flag options in new and reply post interfaces.
