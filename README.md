@@ -24,6 +24,7 @@ The next step will be writing unit tests and integration tests, while ultimately
 3. Users can no longer manually enter the break square bracket tag, evading newline squeezing.
 4. purple/quote text now puts captured newline before span
 5. purple/quote text no longer prematurely terminates on dollar sign
+6. added ability to do cross entry cites using the hash symbol followed by the post number
 
 ## Updates (October 6, 2021)
 1. Ability to show/hide filter and flag options in new and reply post interfaces.
