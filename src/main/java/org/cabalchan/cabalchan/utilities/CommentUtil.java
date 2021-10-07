@@ -15,7 +15,7 @@ public class CommentUtil {
         //youtube replacement
         result = result.replaceAll("(?:https://)?(?:www\\.)?(?:youtube\\.com)(?:/watch\\?v=)([^\\s]*)", "[youtube]$1[embed][/byoutube]$1[/youtube]");
         //hyperlink replacement
-        result = result.replaceAll("\\b(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]", "[link]$0[/blink]$0[/link]");
+        result = result.replaceAll("\\b(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;(]*[-a-zA-Z0-9+&@#/%=~_|)]", "[link]$0[/blink]$0[/link]");
         //purptext replacement
         result = result.replaceAll("(^|[\\n\\r])(<)([^\\n\\r]*)", "$1[purptext]&lt;$3[/purptext]");
         //quotetext replacement
