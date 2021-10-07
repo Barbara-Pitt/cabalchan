@@ -43,7 +43,6 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
 @Controller
-@RequestMapping("/")
 public class Main {
 
     @Autowired
@@ -67,7 +66,7 @@ public class Main {
     @Autowired
     private FilterRepository filterRepository;
 
-    @GetMapping("new")
+    @GetMapping("/new")
     public String entry(@CookieValue(name="cabaluuid", required = false) Optional<Cookie> cabaluuid, Model model){
 
         //notifications
@@ -82,7 +81,7 @@ public class Main {
         return "newentry";
     }
 
-    @PostMapping("new")
+    @PostMapping("/new")
     public String makeEntry(@RequestParam("spoiler") Optional<String> spoiler
                             ,@RequestParam("flag") Optional<String> flag
                             ,@RequestParam("filter") Optional<BigInteger> filter
