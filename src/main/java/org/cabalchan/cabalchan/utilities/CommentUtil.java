@@ -10,6 +10,8 @@ public class CommentUtil {
         //break tag replacement
         result = result.replaceAll("\\[br\\]","");
         result = result.replaceAll("\\[br2\\]","");
+        //cite replacement
+        result = result.replaceAll("#([1-9]\\d*)", "[entry $1]");
         //youtube replacement
         result = result.replaceAll("(?:https://)?(?:www\\.)?(?:youtube\\.com)(?:/watch\\?v=)([^\\s]*)", "[youtube]$1[embed][/byoutube]$1[/youtube]");
         //hyperlink replacement
@@ -27,6 +29,9 @@ public class CommentUtil {
         result = result.replaceAll("\r?\n", "[br]");
         //strip html tags
         result = Jsoup.clean(result, Safelist.none());
+
+        //final replacement cites
+        result = result.replaceAll("\\[entry ([1-9]\\d*)\\]", "<a href=\"/entry?entryid=$1\"><span>#$1</span></a>");
 
         //final replacement youtube
         result = result.replaceAll("\\[youtube\\]", "<div class=\"ytembed\" x-data=\"{ yt: false }\"> <a @click=\"yt = !yt\">https://www.youtube.com/watch?v=");
