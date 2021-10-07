@@ -40,3 +40,5 @@ The next step will be writing unit tests and integration tests, while ultimately
 5. Create cabalchan logo, including custom flag & favicon.
 6. Refactor out and reuse attachment section from entry.html
 7. Refactor regexps to use multiline mode: https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html#lt
+8. Refactor controller into smaller controllers
+9. Refactor some logic in the controllers into reusable services.
