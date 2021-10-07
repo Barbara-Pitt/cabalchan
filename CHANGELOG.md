@@ -12,6 +12,7 @@ All changes and proposed changes documented here.
 8. Modified hyperlink regex to allow parens
 9. Modified application properties to allow caching of statics
 10. Updated cookie/user uuid to last for 365 days max
+11. Added file logging
 
 ## Updates (October 6, 2021)
 1. Ability to show/hide filter and flag options in new and reply post interfaces.
