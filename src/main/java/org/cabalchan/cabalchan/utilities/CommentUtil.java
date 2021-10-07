@@ -15,9 +15,9 @@ public class CommentUtil {
         //hyperlink replacement
         result = result.replaceAll("\\b(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]", "[link]$0[/blink]$0[/link]");
         //purptext replacement
-        result = result.replaceAll("(^|[\\n\\r])(<)([^\\n\\r$]*)", "[purptext]$1&lt;$3[/purptext]");
+        result = result.replaceAll("(^|[\\n\\r])(<)([^\\n\\r$]*)", "$1[purptext]&lt;$3[/purptext]");
         //quotetext replacement
-        result = result.replaceAll("(^|[\\n\\r])(>)([^\\n\\r$]*)", "[quotetext]$1&gt;$3[/quotetext]");
+        result = result.replaceAll("(^|[\\n\\r])(>)([^\\n\\r$]*)", "$1[quotetext]&gt;$3[/quotetext]");
         //red replacement
         result = result.replaceAll("==(.*?)==", "[redtext]$1[/redtext]");
         //spoiler replacement
