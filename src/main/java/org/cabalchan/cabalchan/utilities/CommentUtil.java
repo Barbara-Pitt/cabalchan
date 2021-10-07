@@ -7,6 +7,9 @@ public class CommentUtil {
     public static String process(String comment) {
 
         String result = comment.trim();
+        //break tag replacement
+        result = result.replaceAll("\\[br\\]","");
+        result = result.replaceAll("\\[br2\\]","");
         //youtube replacement
         result = result.replaceAll("(?:https://)?(?:www\\.)?(?:youtube\\.com)(?:/watch\\?v=)([^\\s]*)", "[youtube]$1[embed][/byoutube]$1[/youtube]");
         //hyperlink replacement
