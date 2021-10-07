@@ -106,7 +106,7 @@ public class Main {
         } else {
             String cabalid = UUID.randomUUID().toString();
             Cookie cookie = new Cookie("cabaluuid", cabalid);
-            cookie.setMaxAge(90 * 24 * 60 * 60); // 90 days
+            cookie.setMaxAge(365 * 24 * 60 * 60); // 365 days
             cookie.setHttpOnly(true);
             response.addCookie(cookie);
             entry.setCabalUUID(cabalid);
