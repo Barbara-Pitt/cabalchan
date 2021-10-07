@@ -2,7 +2,7 @@
 Anonymous forum software (FLOSS - AGPLv3)
 
 # Demo instance:
-cabalchan.org
+https://cabalchan.org
 
 ## Building:
 ./mvnw clean package -DskipTests
