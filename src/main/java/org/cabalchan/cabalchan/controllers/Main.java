@@ -8,25 +8,17 @@ import java.util.UUID;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jsoup.Jsoup;
-import org.jsoup.safety.Safelist;
-import org.cabalchan.cabalchan.entities.Appeal;
 import org.cabalchan.cabalchan.entities.Attachment;
-import org.cabalchan.cabalchan.entities.Ban;
 import org.cabalchan.cabalchan.entities.Entry;
 import org.cabalchan.cabalchan.entities.Filter;
 import org.cabalchan.cabalchan.entities.Flag;
 import org.cabalchan.cabalchan.entities.Notification;
-import org.cabalchan.cabalchan.entities.Report;
-import org.cabalchan.cabalchan.repositories.AppealRepository;
 import org.cabalchan.cabalchan.repositories.AttachmentRepository;
 import org.cabalchan.cabalchan.repositories.BanRepository;
 import org.cabalchan.cabalchan.repositories.EntryRepository;
 import org.cabalchan.cabalchan.repositories.FilterRepository;
 import org.cabalchan.cabalchan.repositories.FlagRepository;
-import org.cabalchan.cabalchan.repositories.NewsRepository;
 import org.cabalchan.cabalchan.repositories.NotificationRepository;
-import org.cabalchan.cabalchan.repositories.ReportRepository;
 import org.cabalchan.cabalchan.services.NotificationService;
 import org.cabalchan.cabalchan.utilities.CommentUtil;
 import org.cabalchan.cabalchan.utilities.FileUtil;
@@ -51,8 +43,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
-
-
 @Controller
 @RequestMapping("/")
 public class Main {
@@ -73,38 +63,11 @@ public class Main {
     private NotificationService notificationService;
 
     @Autowired
-    private ReportRepository reportRepository;
-
-    @Autowired
     private BanRepository banRepository;
-
-    @Autowired
-    private AppealRepository appealRepository;
-
-    @Autowired
-    private NewsRepository newsRepository;
 
     @Autowired
     private FilterRepository filterRepository;
     
-    @GetMapping("")
-    public String index(@CookieValue(name="cabaluuid", required = false) Optional<Cookie> cabaluuid, Model model
-    ,@RequestParam("page") Optional<Integer> page){
-
-        //notifications
-        model.addAttribute("notificationCount", notificationService.getCount(cabaluuid));
-
-        if(page.isPresent() && (page.get() > 0)){
-            model.addAttribute("previous",page.get()-1);
-            model.addAttribute("next",page.get()+1);
-            model.addAttribute("entries", entryRepository.threadsPage(PageRequest.of(page.get(),25)));
-        } else {
-            model.addAttribute("next",1);
-            model.addAttribute("entries", entryRepository.threadsPage(PageRequest.of(0,25)));
-        }
-        return "index";
-    }
-
     @GetMapping("/entry")
     public String entry(Model model
     ,@CookieValue(name="cabaluuid", required = false) Optional<Cookie> cabaluuid
@@ -138,97 +101,6 @@ public class Main {
             model.addAttribute("entries", entryRepository.entriesPage(p.get(), PageRequest.of(0,25)));
         } 
         return "entry";
-    }
-    
-    @GetMapping("faq")
-    public String faq(@CookieValue(name="cabaluuid", required = false) Optional<Cookie> cabaluuid, Model model){
-
-        //notifications
-        model.addAttribute("notificationCount", notificationService.getCount(cabaluuid));
-
-        return "faq";
-    }
-
-    @GetMapping("rules")
-    public String rules(@CookieValue(name="cabaluuid", required = false) Optional<Cookie> cabaluuid, Model model){
-
-        //notifications
-        model.addAttribute("notificationCount", notificationService.getCount(cabaluuid));
-
-        return "rules";
-    }
-
-    @GetMapping("news")
-    public String news(@CookieValue(name="cabaluuid", required = false) Optional<Cookie> cabaluuid, Model model){
-
-        //notifications
-        model.addAttribute("notificationCount", notificationService.getCount(cabaluuid));
-
-        Integer activeIP = entryRepository.activeAddressCount(LocalDateTime.now().minusDays(3));
-        Integer activePPH = entryRepository.activePPH(LocalDateTime.now().minusHours(1));
-
-        model.addAttribute("activeips", activeIP);
-        model.addAttribute("activepph", activePPH);
-
-        //shows last 5 news entries
-        var news = newsRepository.newsPage(PageRequest.of(0,5));
-        model.addAttribute("news", news);
-        return "news";
-    }
-
-    @GetMapping("appeal")
-    public String appeal(Model model){
-        List<Ban> bans = banRepository.currentBans(IPUtil.getClientIpAddressIfServletRequestExist(), LocalDateTime.now());
-        model.addAttribute("bans", bans);
-        return "banappeals";
-    }
-
-    @PostMapping("appeal")
-    public String banAppeal(@RequestParam("justification") Optional<String> justification
-                            ,@RequestParam("banid") BigInteger banId){
-        Ban b = banRepository.getById(banId);
-        Appeal a = new Appeal();
-        a.setBan(b);
-        if (justification.isPresent()){
-            a.setComment(Jsoup.clean(justification.get(), Safelist.none()));
-        }
-        a.setCreateDate(LocalDateTime.now());
-        appealRepository.save(a);
-        return "redirect:/appeal";
-    }
-
-    @GetMapping("notifications")
-    public String notifications(@CookieValue(name="cabaluuid", required = false) Optional<Cookie> cabaluuid, Model model){
-
-        //delete old notifications
-        notificationRepository.deleteAllInBatch(notificationRepository.oldNotifications(LocalDateTime.now().minusDays(7)));
-
-        model.addAttribute("notificationCount", "viewing");
-
-        if (cabaluuid.isPresent()){
-            model.addAttribute("notifications", notificationRepository.latestNotifications(cabaluuid.get().getValue(),PageRequest.of(0,30)));
-        }
-        
-        return "notifications";
-    }
-
-    @GetMapping("notif")
-    public String notif(@RequestParam("notifid") BigInteger notificationId
-    ,@CookieValue(name="cabaluuid", required = false) Optional<Cookie> cabaluuid){
-        Optional<Notification> n = notificationRepository.findById(notificationId);
-        if (n.isPresent() && cabaluuid.isPresent()){
-            Notification notif = n.get();
-            //check to see user's current cookie id is the same as the cookie id for that notification
-            if(notif.getCabalUUID().equals(cabaluuid.get().getValue())){
-                notif.setSeen(true);
-                notificationRepository.save(notif);
-                return "redirect:/entry?entryid=" + notif.getEntry().getId();
-            } else {
-                //user trying to use notification not belonging to them
-                return "redirect:/notifications";
-            }  
-        }
-        return "redirect:/notifications";
     }
 
     @GetMapping("new")
@@ -376,20 +248,5 @@ public class Main {
             return "redirect:/";
         }
         
-    }
-
-    @GetMapping("/report")
-    public String report(Model model, @RequestParam("entryid") BigInteger entryId){
-        model.addAttribute("entryId", entryId);
-        return "report";
-    }
-
-    @PostMapping("/report")
-    public String reportPost(@RequestParam("entryid") BigInteger entryId){
-        Report r = new Report();
-        r.setEntry(entryRepository.getById(entryId));
-        r.setCreateDate(LocalDateTime.now());
-        reportRepository.save(r);
-        return "reportthanks";
     }
 }
