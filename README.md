@@ -25,6 +25,7 @@ The next step will be writing unit tests and integration tests, while ultimately
 4. purple/quote text now puts captured newline before span
 5. purple/quote text no longer prematurely terminates on dollar sign
 6. added ability to do cross entry cites using the hash symbol followed by the post number
+7. Refactored main controller into into smaller controllers
 
 ## Updates (October 6, 2021)
 1. Ability to show/hide filter and flag options in new and reply post interfaces.
@@ -40,5 +41,5 @@ The next step will be writing unit tests and integration tests, while ultimately
 5. Create cabalchan logo, including custom flag & favicon.
 6. Refactor out and reuse attachment section from entry.html
 7. Refactor regexps to use multiline mode: https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html#lt
-8. Refactor controller into smaller controllers
+8. Refactor mod controller into smaller controllers
 9. Refactor some logic in the controllers into reusable services.
