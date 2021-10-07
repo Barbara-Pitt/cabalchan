@@ -19,8 +19,9 @@ public class CommentUtil {
         result = result.replaceAll("==(.*?)==", "[redtext]$1[/redtext]");
         //spoiler replacement
         result = result.replaceAll("\\*\\*(.*?)\\*\\*", "[spoiler]$1[/spoiler]");
-        //line break
-        result = result.replaceAll("(\r\n|\n)+", "[br]");
+        //line break(s)
+        result = result.replaceAll("(\r?\n){2,}", "[br2]");
+        result = result.replaceAll("\r?\n", "[br]");
         //strip html tags
         result = Jsoup.clean(result, Safelist.none());
 
@@ -36,6 +37,7 @@ public class CommentUtil {
 
         //final replacement break
         result = result.replaceAll("\\[br\\]", "<br>");
+        result = result.replaceAll("\\[br2\\]", "<br><br>");
 
         //final replacement spoiler
         result = result.replaceAll("\\[spoiler\\](.*?)\\[/spoiler\\]", "<span class='spoiler'>$1</span>");
