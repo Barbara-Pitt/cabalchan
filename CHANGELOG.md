@@ -32,10 +32,4 @@ All changes and proposed changes documented here.
 5. Create cabalchan logo, including custom flag & favicon.
 6. Refactor out and reuse attachment section from entry.html
 7. Refactor regexps to use multiline mode: https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html#lt
-8. Refactor mod controller into smaller controllers
-9. Refactor some logic in the controllers into reusable services.
-
-## Special Thanks To:
-- The poster only known as 'lewdanon' from leftypol for technical suggestions and bugfixes.
-- Krates and other jannies from leftypol for UX and other suggestions.
-- Lainchan anons from /λ/
+8. Refactor some logic in the controllers into reusable services.
