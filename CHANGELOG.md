@@ -2,8 +2,9 @@
 All changes and proposed changes documented here.
 
 ## Updates (October 8, 2021)
-1. Refactored Mod controller into several smaller controllers
+1. Refactored Mod controller into several smaller controllers.
 2. Modified gitignore to ignore the log text file.
+3. Added meta description tag for SEO purposes.
 
 ## Updates (October 7, 2021)
 1. Fixed typo in rules ('commerical' instead of 'commercial')
