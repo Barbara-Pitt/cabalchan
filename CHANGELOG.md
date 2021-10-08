@@ -34,3 +34,4 @@ All changes and proposed changes documented here.
 6. Refactor out and reuse attachment section from entry.html
 7. Refactor regexps to use multiline mode: https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html#lt
 8. Refactor some logic in the controllers into reusable services.
+9. Change archive/old post limit from 7 days to 30 days.
