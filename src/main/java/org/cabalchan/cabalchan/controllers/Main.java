@@ -116,7 +116,7 @@ public class Main {
             Entry p = entryRepository.getById(parent.get());
 
             //check to see if post being replied too is beyond archive date
-            Boolean old = p.getCreateDate().isBefore(LocalDateTime.now().minusDays(7));
+            Boolean old = p.getCreateDate().isBefore(LocalDateTime.now().minusDays(30));
             if (old){
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Replying to old/archived post");
             }

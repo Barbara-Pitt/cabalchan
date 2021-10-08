@@ -54,7 +54,7 @@ public class EntryController {
         }
         model.addAttribute("OP", p.get());
         //old post?
-        Boolean old = p.get().getCreateDate().isBefore(LocalDateTime.now().minusDays(7));
+        Boolean old = p.get().getCreateDate().isBefore(LocalDateTime.now().minusDays(30));
         model.addAttribute("oldOP", old);
 
         if(page.isPresent() && (page.get() > 0)){
