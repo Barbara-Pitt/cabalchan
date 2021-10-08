@@ -6,10 +6,7 @@ import java.util.Optional;
 
 import org.cabalchan.cabalchan.entities.Appeal;
 import org.cabalchan.cabalchan.repositories.AppealRepository;
-import org.cabalchan.cabalchan.repositories.AttachmentRepository;
 import org.cabalchan.cabalchan.repositories.BanRepository;
-import org.cabalchan.cabalchan.repositories.EntryRepository;
-import org.cabalchan.cabalchan.repositories.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -21,14 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ModAppealsController {
-    @Autowired
-    EntryRepository entryRepository;
-
-    @Autowired
-    AttachmentRepository attachmentRepository;
-
-    @Autowired
-    NotificationRepository notificationRepository;
 
     @Autowired
     BanRepository banRepository;
