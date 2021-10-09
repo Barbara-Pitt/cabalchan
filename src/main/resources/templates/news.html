@@ -19,7 +19,9 @@
           <hr>
            <ul>
                <li>PPH:&nbsp;<span th:text="${activepph}"></span></li>
-               <li>Active IPs (72h):&nbsp;<span th:text="${activeips}"></span></li>
+               <li>Active IPs (daily):&nbsp;<span th:text="${activedailyips}"></span></li>
+               <li>Active IPs (three days):&nbsp;<span th:text="${activeips}"></span></li>
+               <li>Active IPs (monthly):&nbsp;<span th:text="${activemonthlyips}"></span></li>
            </ul>
         </div>
         <div th:if="${news}" th:each="newsitem : ${news}" class="entry">

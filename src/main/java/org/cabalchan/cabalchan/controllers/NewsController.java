@@ -34,9 +34,13 @@ public class NewsController {
 
         Integer activeIP = entryRepository.activeAddressCount(LocalDateTime.now().minusDays(3));
         Integer activePPH = entryRepository.activePPH(LocalDateTime.now().minusHours(1));
-
+        Integer activeDailyIP = entryRepository.activeAddressCount(LocalDateTime.now().minusDays(1));
+        Integer activeMonthlyIP = entryRepository.activeAddressCount(LocalDateTime.now().minusDays(30));
+        
         model.addAttribute("activeips", activeIP);
         model.addAttribute("activepph", activePPH);
+        model.addAttribute("activedailyips", activeDailyIP);
+        model.addAttribute("activemonthlyips", activeMonthlyIP);
 
         //shows last 5 news entries
         var news = newsRepository.newsPage(PageRequest.of(0,5));
