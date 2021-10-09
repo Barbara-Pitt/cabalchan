@@ -7,6 +7,11 @@ https://cabalchan.org
 ## Building:
 ./mvnw clean package -DskipTests
 
+## Running:
+- use java -jar
+- Recommend systemd service to run the jar using a bash script on Ubuntu and related distros
+- If you run into post-startup lag (usually only for a few minutes), it may be lack of random/entropy java uses for session id generation. Try logging in and doing stuff on the host. Alternatively, running the jar with the '-Djava.security.egd=file:/dev/./urandom' option can help. Finally, dockerized versions of the app seem to be less susceptible to this.
+
 ## Tech Stack
 - Architecture: Monolith (with Server Side HTML Templating)
 - Front End: Thymeleaf templates, skeleton.css, normalize.css, alpine.js, bootstrap icons, cssgram
@@ -20,6 +25,6 @@ The next step will be writing unit tests and integration tests, while ultimately
 changelog for details on updates and proposed changes.
 
 ## Special Thanks To:
-- The poster only known as 'lewdanon' from leftypol for technical suggestions and bugfixes.
 - Krates, Caballo, and other jannies from leftypol for UX and other suggestions.
 - Lainchan anons from /λ/
+- Various other anons who have helped with testing, and technical bug fixes.
