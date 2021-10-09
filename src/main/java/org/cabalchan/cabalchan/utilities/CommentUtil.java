@@ -13,7 +13,7 @@ public class CommentUtil {
         //cite replacement
         result = result.replaceAll("#([1-9]\\d*)", "[entry $1]");
         //youtube replacement
-        result = result.replaceAll("(?:https://)?(?:www\\.)?(?:youtube\\.com)(?:/watch\\?v=)([^\\s]*)", "[youtube]$1[embed][/byoutube]$1[/youtube]");
+        result = result.replaceAll("(?:https://)?(?:www\\.)?(?:youtube\\.com)(?:/watch\\?v=)([^\\s]*)", "[youtube]$1[embed][/byoutube]$1[/youtube][invidious]$1[/invidious]");
         //hyperlink replacement
         result = result.replaceAll("\\b(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;(]*[-a-zA-Z0-9+&@#/%=~_|)]", "[link]$0[/blink]$0[/link]");
         //purptext replacement
@@ -34,10 +34,11 @@ public class CommentUtil {
         result = result.replaceAll("\\[entry ([1-9]\\d*)\\]", "<a href=\"/entry?entryid=$1\"><span>#$1</span></a>");
 
         //final replacement youtube
-        result = result.replaceAll("\\[youtube\\]", "<div class=\"ytembed\" x-data=\"{ yt: false }\"> <a @click=\"yt = !yt\">https://www.youtube.com/watch?v=");
+        result = result.replaceAll("\\[youtube\\]", "<div x-data=\"{ yt: false }\"><span class=\"ytembed\"> <a @click=\"yt = !yt\">youtube.com/watch?v=");
         result = result.replaceAll("\\[/byoutube\\]", "</a> <ul x-show=\"yt\"><iframe width=\"100%\" height=\"315\" src=\"https://www.youtube.com/embed/");
-        result = result.replaceAll("\\[/youtube\\]", "\" title=\"YouTube video player\" loading=\"lazy\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe></ul></div>");
-
+        result = result.replaceAll("\\[/youtube\\]", "\" title=\"YouTube video player\" loading=\"lazy\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe></ul></span>");
+        //invidious link for non youtube users
+        result = result.replaceAll("\\[invidious\\]([^&]+?)\\[/invidious\\]", "<a x-show=\"!yt\" href=\"https://iteroni.com/watch?v=$1\" target=\"_blank\">[invidious]</a></div>");
         //final replacement hyperlinks
         result = result.replaceAll("\\[link\\]", "<a target=\"_blank\" href=\"");
         result = result.replaceAll("\\[/blink\\]", "\">");
