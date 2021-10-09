@@ -5,6 +5,8 @@ All changes and proposed changes documented here.
 1. Refactored Mod controller into several smaller controllers.
 2. Modified gitignore to ignore the log text file.
 3. Added meta description tag for SEO purposes.
+4. Changed archive/old post limit from 7 days to 30 days.
+5. Added invidious links to embedded youtube videos
 
 ## Updates (October 7, 2021)
 1. Fixed typo in rules ('commerical' instead of 'commercial')
@@ -34,4 +36,3 @@ All changes and proposed changes documented here.
 6. Refactor out and reuse attachment section from entry.html
 7. Refactor regexps to use multiline mode: https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html#lt
 8. Refactor some logic in the controllers into reusable services.
-9. Change archive/old post limit from 7 days to 30 days.
