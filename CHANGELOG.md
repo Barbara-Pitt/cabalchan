@@ -11,6 +11,10 @@ All changes and proposed changes documented here.
 7. Refactor regexps to use multiline mode: https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html#lt
 8. Refactor some logic in the controllers into reusable services.
 
+## Updates (October 9, 2021)
+1. Removed search bar (at least until search is implemented)
+2. Updated sidebar
+
 ## Updates (October 8, 2021)
 1. Refactored Mod controller into several smaller controllers.
 2. Modified gitignore to ignore the log text file.
