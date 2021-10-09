@@ -14,6 +14,7 @@ All changes and proposed changes documented here.
 ## Updates (October 9, 2021)
 1. Removed search bar (at least until search is implemented)
 2. Updated sidebar
+3. Replaced tomcat with undertow for performance reasons (incl. slow startup issue with prng/lack of entropy)
 
 ## Updates (October 8, 2021)
 1. Refactored Mod controller into several smaller controllers.
