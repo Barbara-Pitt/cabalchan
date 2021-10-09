@@ -1,6 +1,16 @@
 # Changelog
 All changes and proposed changes documented here.
 
+## TODO:
+1. User has Ability to delete notifications
+2. Logged in mods see additional info on regular posts - mods want to browse the site normally and see mod info/options on posts.
+3. Mod logs - Log all mod actions and make the modlog accessible.
+4. Implement search functionality - right now search bar does nothing.
+5. Create cabalchan logo, including custom flag & favicon.
+6. Refactor out and reuse attachment section from entry.html
+7. Refactor regexps to use multiline mode: https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html#lt
+8. Refactor some logic in the controllers into reusable services.
+
 ## Updates (October 8, 2021)
 1. Refactored Mod controller into several smaller controllers.
 2. Modified gitignore to ignore the log text file.
@@ -26,13 +36,3 @@ All changes and proposed changes documented here.
 2. Custom ban lengths - allow mods to ban for custom lengths not on the dropdown menu
 3. Report button now stays in same tab instead of creating a new one.
 4. Reworked notifications - based on cookies not sessions
-
-## TODO:
-1. User has Ability to delete notifications
-2. Logged in mods see additional info on regular posts - mods want to browse the site normally and see mod info/options on posts.
-3. Mod logs - Log all mod actions and make the modlog accessible.
-4. Implement search functionality - right now search bar does nothing.
-5. Create cabalchan logo, including custom flag & favicon.
-6. Refactor out and reuse attachment section from entry.html
-7. Refactor regexps to use multiline mode: https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html#lt
-8. Refactor some logic in the controllers into reusable services.
