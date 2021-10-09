@@ -21,5 +21,5 @@ changelog for details on updates and proposed changes.
 
 ## Special Thanks To:
 - The poster only known as 'lewdanon' from leftypol for technical suggestions and bugfixes.
-- Krates and other jannies from leftypol for UX and other suggestions.
+- Krates, Caballo, and other jannies from leftypol for UX and other suggestions.
 - Lainchan anons from /λ/
