@@ -42,3 +42,4 @@ public/
 
 ### log ###
 caballog.txt
+caballog.txt.*.gz
