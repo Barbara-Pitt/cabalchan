@@ -10,10 +10,12 @@ import org.cabalchan.cabalchan.repositories.NewsRepository;
 import org.cabalchan.cabalchan.repositories.UserRepository;
 import org.cabalchan.cabalchan.utilities.CommentUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@Controller
 public class ModNewsController {
 
     @Autowired
