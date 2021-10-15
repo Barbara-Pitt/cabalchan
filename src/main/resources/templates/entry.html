@@ -86,6 +86,10 @@
                     </a>
                 </div>
               </div>
+              <div th:if="${OP.category}">
+                <hr>
+                <small th:text="'Category: ' + '/' + ${OP.category.title} + '/ - ' + ${OP.category.subtitle}"></small>
+              </div>
               <hr>
               <div>
                 <span th:if="!${oldOP}">
