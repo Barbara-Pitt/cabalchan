@@ -97,8 +97,7 @@ values
 ,('/flags/yugoslavia.png','image/png','Yugoslavia')
 ,('/flags/zapatista.png','image/png','Zapatista') ON CONFLICT DO NOTHING;
 
-
---insert into flags
+--insert into filters
 insert into filters (filtername,cssclass) 
 values 
 ('1977','_1977')
@@ -127,3 +126,14 @@ values
 ,('Willow', 'willow')
 ,('X-Pro-2', 'xpro2') ON CONFLICT DO NOTHING;
 
+--insert into categories
+insert into categories (title,subtitle) 
+values 
+('current','Current Events, Politics, News')
+,('eceleberry','Twitter, Social Media, Ecelebs and E-drama')
+,('g', 'Computer Programming') 
+,('lit', 'Books and Book reviews') 
+,('mu', 'Music') 
+,('tv', 'Television and Movies') 
+,('v', 'Video Games')
+ON CONFLICT DO NOTHING;
