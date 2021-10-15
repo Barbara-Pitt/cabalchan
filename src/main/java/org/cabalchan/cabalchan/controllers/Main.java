@@ -9,6 +9,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.cabalchan.cabalchan.entities.Attachment;
+import org.cabalchan.cabalchan.entities.Category;
 import org.cabalchan.cabalchan.entities.Entry;
 import org.cabalchan.cabalchan.entities.Filter;
 import org.cabalchan.cabalchan.entities.Flag;
@@ -91,6 +92,7 @@ public class Main {
     public String makeEntry(@RequestParam("spoiler") Optional<String> spoiler
                             ,@RequestParam("flag") Optional<String> flag
                             ,@RequestParam("filter") Optional<BigInteger> filter
+                            ,@RequestParam("category") Optional<BigInteger> category
                             ,@RequestParam("parentid") Optional<BigInteger> parent
                             ,@RequestParam("comment") String comment
                             ,@RequestParam("attachment") Optional<MultipartFile> file
@@ -144,6 +146,13 @@ public class Main {
         if (flag.isPresent()){
             Flag f = flagRepository.findByFilename(flag.get());
             entry.setFlag(f);
+        }
+
+        if (category.isPresent()){
+            Optional<Category> c = categoryRepository.findById(category.get());
+            if(c.isPresent()){
+                entry.setCategory(c.get());
+            }
         }
 
         if(file.isPresent() && !file.get().isEmpty()){
