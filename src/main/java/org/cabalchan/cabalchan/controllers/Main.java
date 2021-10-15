@@ -15,6 +15,7 @@ import org.cabalchan.cabalchan.entities.Flag;
 import org.cabalchan.cabalchan.entities.Notification;
 import org.cabalchan.cabalchan.repositories.AttachmentRepository;
 import org.cabalchan.cabalchan.repositories.BanRepository;
+import org.cabalchan.cabalchan.repositories.CategoryRepository;
 import org.cabalchan.cabalchan.repositories.EntryRepository;
 import org.cabalchan.cabalchan.repositories.FilterRepository;
 import org.cabalchan.cabalchan.repositories.FlagRepository;
@@ -65,6 +66,9 @@ public class Main {
     @Autowired
     private FilterRepository filterRepository;
 
+    @Autowired
+    CategoryRepository categoryRepository;
+
     @GetMapping("/new")
     public String entry(@CookieValue(name="cabaluuid", required = false) Optional<Cookie> cabaluuid, Model model){
 
@@ -76,6 +80,9 @@ public class Main {
 
         List<Filter> filters = filterRepository.findAll();       
         model.addAttribute("filterlist", filters);
+
+        //categories
+        model.addAttribute("categories", categoryRepository.findAll());
 
         return "newentry";
     }

@@ -9,7 +9,7 @@
         <div th:replace="fragments :: leftmenu"></div>
       </div>
       <div class="six columns entry" x-data="{ flag : '' }">
-        <form th:action="@{/new}" method="post" enctype='multipart/form-data' th:attr="x-data='{ showflag : true , showfilter : true }'">  
+        <form th:action="@{/new}" method="post" enctype='multipart/form-data' th:attr="x-data='{ showflag : true , showfilter : true, showcategory: true }'">  
           <input type="checkbox" name="spoiler">
           <span class="label-body">Spoiler Images/Videos&nbsp;<i class="bi bi-camera-video-off-fill"></i></span>   
           <input style="float:right;" class="button" type="submit" value="Submit">
@@ -26,6 +26,14 @@
           <th:block th:each="filter : ${filterlist}">
             <option th:value="${filter.id}" th:text="${filter.filtername}"></option>
           </th:block>
+          </select>
+
+          <label class="clickable" @click="showcategory = !showcategory" for="category">Category(optional) </label>
+          <select x-show="!showcategory" class="u-full-width" id="category" name="category">
+            <option disabled selected value> -- select an option -- </option>
+            <th:block th:each="category : ${categories}">
+              <option th:value="${category.id}" th:text="'/'+${category.title}+'/ - '+${category.subtitle}"></option>
+            </th:block>
           </select>
 
           <label for="comment">Message</label>
