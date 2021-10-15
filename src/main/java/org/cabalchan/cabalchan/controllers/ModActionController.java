@@ -19,6 +19,7 @@ import org.cabalchan.cabalchan.entities.Notification;
 import org.cabalchan.cabalchan.entities.Report;
 import org.cabalchan.cabalchan.repositories.AttachmentRepository;
 import org.cabalchan.cabalchan.repositories.BanRepository;
+import org.cabalchan.cabalchan.repositories.CategoryRepository;
 import org.cabalchan.cabalchan.repositories.EntryRepository;
 import org.cabalchan.cabalchan.repositories.NotificationRepository;
 import org.cabalchan.cabalchan.repositories.ReportRepository;
@@ -54,12 +55,16 @@ public class ModActionController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    CategoryRepository categoryRepository;
+
     @PostMapping("/mod/action")
     public String modAction(Principal principal
                             ,@RequestParam("actiontype") String actionType
                             ,@RequestParam("reportids[]") Optional<List<BigInteger>> reportIds
                             ,@RequestParam("banlength") Optional<Integer> banLength
                             ,@RequestParam("banreason") Optional<String> banReason
+                            ,@RequestParam("category") Optional<BigInteger> category
                             ,@RequestParam("banlengthcustom") Optional<String> banLengthCustom){
         if (reportIds.isPresent()){
             List<Report> r = reportRepository.findAllById(reportIds.get());
@@ -82,6 +87,17 @@ public class ModActionController {
                         attachmentRepository.save(a);
                         reportRepository.delete(report);
                     } 
+                } else if (actionType.equals("recategorize")){
+                    Entry e = report.getEntry();
+                    if (category.isPresent()){
+                        if(category.get().equals(BigInteger.valueOf(0))){
+                            e.setCategory(null);
+                        } else {
+                            e.setCategory(categoryRepository.getById(category.get()));
+                        }
+                    }
+                    entryRepository.save(e);
+                    reportRepository.delete(report);
                 } else if(actionType.equals("warning")){
                     Entry e = report.getEntry();
                     String message = "<span class=\"modcomment\">"
