@@ -26,7 +26,6 @@ CREATE TABLE if not exists entries(
     id BIGSERIAL PRIMARY KEY
     ,parent_id bigint references entries(id)
     ,flag_id bigint references flags(id)
-    ,filter_id bigint references filters(id)
     ,category_id bigint references categories(id)
     ,ipaddr text not null
     ,cabaluuid text not null
