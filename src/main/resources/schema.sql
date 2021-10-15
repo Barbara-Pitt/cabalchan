@@ -14,6 +14,14 @@ CREATE TABLE if not exists categories (
     ,unique(title)
 );
 
+CREATE TABLE if not exists filters(
+    id BIGSERIAL PRIMARY KEY
+    ,cssclass text not null
+    ,filtername text not NULL
+    ,unique(cssclass)
+    ,unique(filtername)
+);
+
 CREATE TABLE if not exists entries(
     id BIGSERIAL PRIMARY KEY
     ,parent_id bigint references entries(id)
@@ -24,14 +32,6 @@ CREATE TABLE if not exists entries(
     ,cabaluuid text not null
     ,comment text
     ,create_dt timestamp without time zone not null
-);
-
-CREATE TABLE if not exists filters(
-    id BIGSERIAL PRIMARY KEY
-    ,cssclass text not null
-    ,filtername text not NULL
-    ,unique(cssclass)
-    ,unique(filtername)
 );
 
 CREATE TABLE if not exists attachments(
