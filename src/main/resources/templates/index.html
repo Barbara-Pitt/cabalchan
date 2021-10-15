@@ -19,7 +19,7 @@
           <div th:replace="fragments :: attachment"></div>
           <div th:if="${posts.category}">
             <hr>
-            <small th:text="'Category: ' + '/' + ${posts.category.title} + '/ - ' + ${posts.category.subtitle}"></small>
+            <small class="entry-category" th:text="'Category: ' + '/' + ${posts.category.title} + '/ - ' + ${posts.category.subtitle}"></small>
           </div>
           <hr>
           <div>
