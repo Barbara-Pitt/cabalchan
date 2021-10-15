@@ -45,10 +45,6 @@ public class Entry {
     @JoinColumn(name="category_id")
     private Category category;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="filter_id")
-    private Filter filter;
-
     @OneToOne(mappedBy = "entry",fetch = FetchType.LAZY)
     private Attachment attachment;
 
