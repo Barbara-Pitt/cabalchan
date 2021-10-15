@@ -89,7 +89,7 @@ body {
 .spoiler {
     color:gray;
     background-color: grey;
-    transition: 1.0s linear;
+    transition: 1.5s linear;
 }
 
 ::selection {
