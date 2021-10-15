@@ -12,43 +12,12 @@ All changes and proposed changes documented here.
 8. Refactor some logic in the controllers into reusable services.
 9. Look into storing width/height data with images as to not have jumping around with content reflows upon lazy loading images.
 
+## Updates (October 15, 2021)
+1. Added distinct class to category text
+
 ## Updates (October 14, 2021)
 1. Increased spoiler(text) time to transition from 1 second to 1.5 seconds.
 
 ## Updates (October 13, 2021)
 1. Addded categories (lightweight boards) functionality.
 2. Spoilered IP addresses in mod menu
-
-## Updates (October 9, 2021)
-1. Fixed css (overflow-wrap: break-word) to prevent horizontal text overflow on entries.
-
-## Updates (October 9, 2021)
-1. Removed search bar (at least until search is implemented)
-2. Updated sidebar
-3. Replaced tomcat with undertow for performance reasons (incl. slow startup issue with prng/lack of entropy)
-
-## Updates (October 8, 2021)
-1. Refactored Mod controller into several smaller controllers.
-2. Modified gitignore to ignore the log text file.
-3. Added meta description tag for SEO purposes.
-4. Changed archive/old post limit from 7 days to 30 days.
-5. Added invidious links to embedded youtube videos
-
-## Updates (October 7, 2021)
-1. Fixed typo in rules ('commerical' instead of 'commercial')
-2. Newline squeezing now allows two breaks for paragraphs.
-3. Users can no longer manually enter the break square bracket tag, evading newline squeezing.
-4. purple/quote text now puts captured newline before span
-5. purple/quote text no longer prematurely terminates on dollar sign
-6. added ability to do cross entry cites using the hash symbol followed by the post number
-7. Refactored main controller into into smaller controllers
-8. Modified hyperlink regex to allow parens
-9. Modified application properties to allow caching of statics
-10. Updated cookie/user uuid to last for 365 days max
-11. Added file logging
-
-## Updates (October 6, 2021)
-1. Ability to show/hide filter and flag options in new and reply post interfaces.
-2. Custom ban lengths - allow mods to ban for custom lengths not on the dropdown menu
-3. Report button now stays in same tab instead of creating a new one.
-4. Reworked notifications - based on cookies not sessions
