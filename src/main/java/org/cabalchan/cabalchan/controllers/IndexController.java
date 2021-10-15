@@ -4,9 +4,13 @@ import java.util.Optional;
 
 import javax.servlet.http.Cookie;
 
+import org.cabalchan.cabalchan.entities.Category;
+import org.cabalchan.cabalchan.entities.Entry;
+import org.cabalchan.cabalchan.repositories.CategoryRepository;
 import org.cabalchan.cabalchan.repositories.EntryRepository;
 import org.cabalchan.cabalchan.services.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,21 +27,52 @@ public class IndexController {
     @Autowired
     private EntryRepository entryRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @GetMapping("/")
     public String index(@CookieValue(name="cabaluuid", required = false) Optional<Cookie> cabaluuid, Model model
-    ,@RequestParam("page") Optional<Integer> page){
+    ,@RequestParam("page") Optional<Integer> page
+    ,@RequestParam("category") Optional<String> category){
 
         //notifications
         model.addAttribute("notificationCount", notificationService.getCount(cabaluuid));
 
-        if(page.isPresent() && (page.get() > 0)){
-            model.addAttribute("previous",page.get()-1);
-            model.addAttribute("next",page.get()+1);
-            model.addAttribute("entries", entryRepository.threadsPage(PageRequest.of(page.get(),25)));
+        String next = "/?page=";
+        String prev = "/?page=";
+
+        Page<Entry> entries = null;
+        if(page.isPresent() && page.get() > 0){
+            next += page.get()+1;
+            prev += page.get()-1;
+            if (category.isPresent()){
+                Optional<Category> searchCategory = categoryRepository.findByTitle(category.get());
+                if(searchCategory.isPresent()){
+                    entries = entryRepository.threadsCategorizedPage(PageRequest.of(page.get(),25),searchCategory.get());
+                    next += "&category=" + category.get();
+                    prev += "&category=" + category.get();
+                }
+            } else {
+                entries = entryRepository.threadsPage(PageRequest.of(page.get(),25));
+            } 
         } else {
-            model.addAttribute("next",1);
-            model.addAttribute("entries", entryRepository.threadsPage(PageRequest.of(0,25)));
+            next += 1;
+            if (category.isPresent()){
+                Optional<Category> searchCategory = categoryRepository.findByTitle(category.get());
+                if(searchCategory.isPresent()){
+                    entries = entryRepository.threadsCategorizedPage(PageRequest.of(0,25),searchCategory.get());
+                    next += "&category=" + category.get();
+                }
+            } else {
+                entries = entryRepository.threadsPage(PageRequest.of(0,25));
+            } 
         }
+
+        if (page.isPresent() && page.get() > 0){
+            model.addAttribute("previous",prev);
+        }
+        model.addAttribute("next",next);
+        model.addAttribute("entries", entries);
         return "index";
     }
 }
