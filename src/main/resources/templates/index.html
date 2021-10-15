@@ -17,6 +17,10 @@
           </div>
           <span th:utext="${posts.comment}"></span>
           <div th:replace="fragments :: attachment"></div>
+          <div th:if="${posts.category}">
+            <hr>
+            <small th:text="'Category: ' + '/' + ${posts.category.title} + '/ - ' + ${posts.category.subtitle}"></small>
+          </div>
           <hr>
           <div>
             <a th:href="'/entry?entryid=' + ${posts.id}"><i class="bi bi-chat-fill"></i>&nbsp;<span th:text="${#lists.size(posts.replies)}"></span>&nbsp;Comments</a>
@@ -30,8 +34,8 @@
         </div>
         <br>
         <div class="arrows">
-          <a class="u-pull-left" th:if="${previous} != null" th:href="'/?page='+${previous}"><i class="bi bi-arrow-left-square-fill"></i>&nbsp;prev</a>
-          <a class="u-pull-right" th:href="'/?page='+${next}">next&nbsp;<i class="bi bi-arrow-right-square-fill"></i></a>
+          <a class="u-pull-left" th:if="${previous} != null" th:href="${previous}"><i class="bi bi-arrow-left-square-fill"></i>&nbsp;prev</a>
+          <a class="u-pull-right" th:href="${next}">next&nbsp;<i class="bi bi-arrow-right-square-fill"></i></a>
           <div class="u-cf"></div>
         </div>
         <br><br>
