@@ -10,6 +10,17 @@ All changes and proposed changes documented here.
 6. Refactor out and reuse attachment section from entry.html
 7. Refactor regexps to use multiline mode: https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html#lt
 8. Refactor some logic in the controllers into reusable services.
+9. Look into storing width/height data with images as to not have jumping around with content reflows upon lazy loading images.
+
+## Updates (October 14, 2021)
+1. Increased spoiler(text) time to transition from 1 second to 1.5 seconds.
+
+## Updates (October 13, 2021)
+1. Addded categories (lightweight boards) functionality.
+2. Spoilered IP addresses in mod menu
+
+## Updates (October 9, 2021)
+1. Fixed css (overflow-wrap: break-word) to prevent horizontal text overflow on entries.
 
 ## Updates (October 9, 2021)
 1. Removed search bar (at least until search is implemented)
