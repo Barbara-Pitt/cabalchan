@@ -60,11 +60,32 @@
                 <i class="bi bi-eye-fill"></i>&nbsp;UNSPOILER
               </span>
             </div>
+
+            <div>
+              <input type="radio" id="recategorize" name="actiontype" value="recategorize">
+              <span title="Recategorize Post">
+                <i class="bi bi-box-arrow-in-right"></i>&nbsp;RECATEGORIZE
+              </span>
+            </div>
+
             <div>
                 <input type="radio" id="dismiss" name="actiontype" value="dismiss" checked>
                 <span title="Dismiss Report">
                     <i class="bi bi-hand-thumbs-down-fill"></i>&nbsp;DISMISS
                 </span>
+            </div>
+
+            <hr>
+            <div>
+                <label for="category">
+                    Category (if applicable)
+                </label>
+                <select name="category" id="category">
+                    <option value="0">No Category</option>
+                    <th:block th:each="category : ${categories}">
+                      <option th:value="${category.id}" th:text="${category.subtitle}"></option>
+                    </th:block>
+                </select>
             </div>
 
             <hr>
@@ -209,7 +230,8 @@
               </div>
               <hr>
               <div>
-                  <p>IP ADDR: <span th:text="${report.entry.ipaddr}"></span></p>
+                  <p>IP ADDR: <span class="spoiler" th:text="${report.entry.ipaddr}"></span></p>
+                  <p th:if="${report.entry.category}">Category: /<span th:text="${report.entry.category.title}"></span>/ - <span th:text="${report.entry.category.subtitle}"></span></p>
                   <p><a th:href="'/mod/posthistory?ipaddr='+${report.entry.ipaddr}"><i class="bi bi-person-lines-fill"></i>&nbsp;View Post History</a></p>
               </div>
         </div>
