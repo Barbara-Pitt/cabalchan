@@ -41,6 +41,10 @@ public class Entry {
     @JoinColumn(name="flag_id")
     private Flag flag;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="category_id")
+    private Category category;
+
     @OneToOne(mappedBy = "entry",fetch = FetchType.LAZY)
     private Attachment attachment;
 
