@@ -176,3 +176,7 @@ figure {
 .clickable:hover {
     color: orange;
 }
+
+[x-cloak] { 
+    display: none !important; 
+}

@@ -15,6 +15,7 @@ All changes and proposed changes documented here.
 ## Updates (October 15, 2021)
 1. Added distinct class to category text
 2. Added "Latest" button to allow users to see all posts (incl. replies), not just OP's/threads
+3. Added x-cloak to prevent images and videos from being shown before alpine can load and display spoilered images/videos.
 
 ## Updates (October 14, 2021)
 1. Increased spoiler(text) time to transition from 1 second to 1.5 seconds.

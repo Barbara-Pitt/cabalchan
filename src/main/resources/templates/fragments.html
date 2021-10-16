@@ -97,20 +97,20 @@
               <div th:class="${posts.attachment.spoiler} ? cwbox : ''" x-show="!cw">
                 <div th:if="${posts.attachment.filter}">
                   <figure th:class="${posts.attachment.filter.cssclass}">
-                    <img loading="lazy" th:if="${posts.attachment.filetype} == 'image/png'" th:src="'/' + ${posts.attachment.filename}" />
-                    <img loading="lazy" th:if="${posts.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${posts.attachment.filename}" />
-                    <img loading="lazy" th:if="${posts.attachment.filetype} == 'image/gif'" th:src="'/' + ${posts.attachment.filename}" />
+                    <img x-cloak loading="lazy" th:if="${posts.attachment.filetype} == 'image/png'" th:src="'/' + ${posts.attachment.filename}" />
+                    <img x-cloak loading="lazy" th:if="${posts.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${posts.attachment.filename}" />
+                    <img x-cloak loading="lazy" th:if="${posts.attachment.filetype} == 'image/gif'" th:src="'/' + ${posts.attachment.filename}" />
                   </figure>
                 </div>
                 <div th:if="!${posts.attachment.filter}">
-                  <img loading="lazy" th:if="${posts.attachment.filetype} == 'image/png'" th:src="'/' + ${posts.attachment.filename}" />
-                  <img loading="lazy" th:if="${posts.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${posts.attachment.filename}" />
-                  <img loading="lazy" th:if="${posts.attachment.filetype} == 'image/gif'" th:src="'/' + ${posts.attachment.filename}" />
+                  <img x-cloak loading="lazy" th:if="${posts.attachment.filetype} == 'image/png'" th:src="'/' + ${posts.attachment.filename}" />
+                  <img x-cloak loading="lazy" th:if="${posts.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${posts.attachment.filename}" />
+                  <img x-cloak loading="lazy" th:if="${posts.attachment.filetype} == 'image/gif'" th:src="'/' + ${posts.attachment.filename}" />
                 </div>
-                <video th:if="${posts.attachment.filetype} == 'video/webm'" controls width="100%" preload="metadata">
+                <video x-cloak th:if="${posts.attachment.filetype} == 'video/webm'" controls width="100%" preload="metadata">
                   <source th:src="'/' + ${posts.attachment.filename}" type="video/webm">
                 </video>
-                <video th:if="${posts.attachment.filetype} == 'video/mp4'" controls width="100%" preload="metadata">
+                <video x-cloak th:if="${posts.attachment.filetype} == 'video/mp4'" controls width="100%" preload="metadata">
                   <source th:src="'/' + ${posts.attachment.filename}" type="video/mp4">
                 </video>
                 <audio preload="none" th:if="${posts.attachment.filetype} == 'audio/mpeg'" controls th:src="'/' + ${posts.attachment.filename}"></audio>
@@ -130,20 +130,20 @@
             <div th:if="!${posts.attachment.spoiler}">
                 <div th:if="${posts.attachment.filter}">
                   <figure th:class="${posts.attachment.filter.cssclass}">
-                    <img loading="lazy" th:if="${posts.attachment.filetype} == 'image/png'" th:src="'/' + ${posts.attachment.filename}" />
-                    <img loading="lazy" th:if="${posts.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${posts.attachment.filename}" />
-                    <img loading="lazy" th:if="${posts.attachment.filetype} == 'image/gif'" th:src="'/' + ${posts.attachment.filename}" />
+                    <img x-cloak loading="lazy" th:if="${posts.attachment.filetype} == 'image/png'" th:src="'/' + ${posts.attachment.filename}" />
+                    <img x-cloak loading="lazy" th:if="${posts.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${posts.attachment.filename}" />
+                    <img x-cloak loading="lazy" th:if="${posts.attachment.filetype} == 'image/gif'" th:src="'/' + ${posts.attachment.filename}" />
                   </figure>
                 </div>
                 <div th:if="!${posts.attachment.filter}">
-                  <img loading="lazy" th:if="${posts.attachment.filetype} == 'image/png'" th:src="'/' + ${posts.attachment.filename}" />
-                  <img loading="lazy" th:if="${posts.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${posts.attachment.filename}" />
-                  <img loading="lazy" th:if="${posts.attachment.filetype} == 'image/gif'" th:src="'/' + ${posts.attachment.filename}" />
+                  <img x-cloak loading="lazy" th:if="${posts.attachment.filetype} == 'image/png'" th:src="'/' + ${posts.attachment.filename}" />
+                  <img x-cloak loading="lazy" th:if="${posts.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${posts.attachment.filename}" />
+                  <img x-cloak loading="lazy" th:if="${posts.attachment.filetype} == 'image/gif'" th:src="'/' + ${posts.attachment.filename}" />
                 </div>
-                <video th:if="${posts.attachment.filetype} == 'video/webm'" controls width="100%" preload="metadata">
+                <video x-cloak th:if="${posts.attachment.filetype} == 'video/webm'" controls width="100%" preload="metadata">
                   <source th:src="'/' + ${posts.attachment.filename}" type="video/webm">
                 </video>
-                <video th:if="${posts.attachment.filetype} == 'video/mp4'" controls width="100%" preload="metadata">
+                <video x-cloak th:if="${posts.attachment.filetype} == 'video/mp4'" controls width="100%" preload="metadata">
                   <source th:src="'/' + ${posts.attachment.filename}" type="video/mp4">
                 </video>
                 <audio preload="none" th:if="${posts.attachment.filetype} == 'audio/mpeg'" controls th:src="'/' + ${posts.attachment.filename}"></audio>
