@@ -32,6 +32,7 @@ public class ProjectConfig extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()
                 .antMatchers("/*").permitAll()
+                .antMatchers("/latest/*").permitAll()
                 .antMatchers("/mod/*").hasAuthority("STAFF")
                 .anyRequest().authenticated()
                 .and()

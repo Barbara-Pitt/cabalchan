@@ -17,6 +17,9 @@ public interface EntryRepository extends JpaRepository<Entry, BigInteger>{
     @Query(value = "select e from Entry e where e.parent IS NULL and e.category=:category order by e.createDate DESC")
     Page<Entry> threadsCategorizedPage(Pageable pageable, Category category);
 
+    @Query(value = "select e from Entry e order by e.createDate DESC")
+    Page<Entry> latestPage(Pageable pageable);
+
     @Query(value = "select e from Entry e where e.parent=:parentEntry order by e.id DESC")
     Page<Entry> entriesPage(Entry parentEntry, Pageable pageable);
 
