@@ -4,9 +4,7 @@ import java.util.Optional;
 
 import javax.servlet.http.Cookie;
 
-import org.cabalchan.cabalchan.entities.Category;
 import org.cabalchan.cabalchan.entities.Entry;
-import org.cabalchan.cabalchan.repositories.CategoryRepository;
 import org.cabalchan.cabalchan.repositories.EntryRepository;
 import org.cabalchan.cabalchan.services.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
