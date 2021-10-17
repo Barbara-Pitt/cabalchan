@@ -46,4 +46,8 @@ public class Attachment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="filter_id")
     private Filter filter;
+
+    private Integer height;
+
+    private Integer width;
 }

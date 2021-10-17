@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
@@ -42,6 +43,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.awt.image.BufferedImage;
 
 @Controller
 public class Main {
@@ -187,6 +189,16 @@ public class Main {
                     attached.setEntry(entry);
                     attached.setFilename(newFileName + "." + fileExt);
                     attached.setFiletype(fileContentType);
+
+                    if(fileContentType.equals("image/png") 
+                    || fileContentType.equals("image/jpeg") 
+                    || fileContentType.equals("image/gif")){
+                        //if image
+                        var dimensions = attachedFile.getInputStream();
+                        BufferedImage bimg = ImageIO.read(dimensions);
+                        attached.setHeight(bimg.getHeight());
+                        attached.setWidth(bimg.getWidth());
+                    }
 
                     if (filter.isPresent()){
                         Optional<Filter> f = filterRepository.findById(filter.get());

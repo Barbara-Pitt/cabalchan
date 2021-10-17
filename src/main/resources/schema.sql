@@ -40,6 +40,8 @@ CREATE TABLE if not exists attachments(
     ,filetype text not null
     ,spoiler boolean not null
     ,filter_id bigint references filters(id)
+    ,height integer
+    ,width integer
     ,unique(filename)
 );
 

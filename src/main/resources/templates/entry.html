@@ -24,15 +24,15 @@
                   <div th:class="${OP.attachment.spoiler} ? cwbox : ''" x-show="!cw">
                     <div th:if="${OP.attachment.filter}">
                       <figure th:class="${OP.attachment.filter.cssclass}">
-                        <img x-cloak loading="lazy" th:if="${OP.attachment.filetype} == 'image/png'" th:src="'/' + ${OP.attachment.filename}" />
-                        <img x-cloak loading="lazy" th:if="${OP.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${OP.attachment.filename}" />
-                        <img x-cloak loading="lazy" th:if="${OP.attachment.filetype} == 'image/gif'" th:src="'/' + ${OP.attachment.filename}" />
+                        <img x-cloak loading="lazy" th:height="${OP.attachment?.height}" th:width="${OP.attachment?.width}" th:if="${OP.attachment.filetype} == 'image/png'" th:src="'/' + ${OP.attachment.filename}" />
+                        <img x-cloak loading="lazy" th:height="${OP.attachment?.height}" th:width="${OP.attachment?.width}" th:if="${OP.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${OP.attachment.filename}" />
+                        <img x-cloak loading="lazy" th:height="${OP.attachment?.height}" th:width="${OP.attachment?.width}" th:if="${OP.attachment.filetype} == 'image/gif'" th:src="'/' + ${OP.attachment.filename}" />
                       </figure>
                     </div>
                     <div th:if="!${OP.attachment.filter}">
-                      <img x-cloak loading="lazy" th:if="${OP.attachment.filetype} == 'image/png'" th:src="'/' + ${OP.attachment.filename}" />
-                      <img x-cloak loading="lazy" th:if="${OP.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${OP.attachment.filename}" />
-                      <img x-cloak loading="lazy" th:if="${OP.attachment.filetype} == 'image/gif'" th:src="'/' + ${OP.attachment.filename}" />
+                      <img x-cloak loading="lazy" th:height="${OP.attachment?.height}" th:width="${OP.attachment?.width}" th:if="${OP.attachment.filetype} == 'image/png'" th:src="'/' + ${OP.attachment.filename}" />
+                      <img x-cloak loading="lazy" th:height="${OP.attachment?.height}" th:width="${OP.attachment?.width}" th:if="${OP.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${OP.attachment.filename}" />
+                      <img x-cloak loading="lazy" th:height="${OP.attachment?.height}" th:width="${OP.attachment?.width}" th:if="${OP.attachment.filetype} == 'image/gif'" th:src="'/' + ${OP.attachment.filename}" />
                     </div>
                     <video x-cloak th:if="${OP.attachment.filetype} == 'video/webm'" controls width="100%" preload="metadata">
                       <source th:src="'/' + ${OP.attachment.filename}" type="video/webm">
@@ -57,15 +57,15 @@
                 <div th:if="!${OP.attachment.spoiler}">
                     <div th:if="${OP.attachment.filter}">
                       <figure th:class="${OP.attachment.filter.cssclass}">
-                        <img loading="lazy" th:if="${OP.attachment.filetype} == 'image/png'" th:src="'/' + ${OP.attachment.filename}" />
-                        <img loading="lazy" th:if="${OP.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${OP.attachment.filename}" />
-                        <img loading="lazy" th:if="${OP.attachment.filetype} == 'image/gif'" th:src="'/' + ${OP.attachment.filename}" />
+                        <img loading="lazy" th:height="${OP.attachment?.height}" th:width="${OP.attachment?.width}" th:if="${OP.attachment.filetype} == 'image/png'" th:src="'/' + ${OP.attachment.filename}" />
+                        <img loading="lazy" th:height="${OP.attachment?.height}" th:width="${OP.attachment?.width}" th:if="${OP.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${OP.attachment.filename}" />
+                        <img loading="lazy" th:height="${OP.attachment?.height}" th:width="${OP.attachment?.width}" th:if="${OP.attachment.filetype} == 'image/gif'" th:src="'/' + ${OP.attachment.filename}" />
                       </figure>
                     </div>
                     <div th:if="!${OP.attachment.filter}">
-                      <img loading="lazy" th:if="${OP.attachment.filetype} == 'image/png'" th:src="'/' + ${OP.attachment.filename}" />
-                      <img loading="lazy" th:if="${OP.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${OP.attachment.filename}" />
-                      <img loading="lazy" th:if="${OP.attachment.filetype} == 'image/gif'" th:src="'/' + ${OP.attachment.filename}" />
+                      <img loading="lazy" th:height="${OP.attachment?.height}" th:width="${OP.attachment?.width}" th:if="${OP.attachment.filetype} == 'image/png'" th:src="'/' + ${OP.attachment.filename}" />
+                      <img loading="lazy" th:height="${OP.attachment?.height}" th:width="${OP.attachment?.width}" th:if="${OP.attachment.filetype} == 'image/jpeg'" th:src="'/' + ${OP.attachment.filename}" />
+                      <img loading="lazy" th:height="${OP.attachment?.height}" th:width="${OP.attachment?.width}" th:if="${OP.attachment.filetype} == 'image/gif'" th:src="'/' + ${OP.attachment.filename}" />
                     </div>
                     <video th:if="${OP.attachment.filetype} == 'video/webm'" controls width="100%" preload="metadata">
                       <source th:src="'/' + ${OP.attachment.filename}" type="video/webm">
