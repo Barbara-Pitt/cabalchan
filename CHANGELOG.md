@@ -13,6 +13,10 @@ All changes and proposed changes documented here.
 9. Look into storing width/height data with images as to not have jumping around with content reflows upon lazy loading images.
 
 ## Updates (October 15, 2021)
+1. Updated FAQ with link to page explaining filters.
+2. Image attachments now store height/width information to prevent content reflows upon lazy loading. CSS tweaked slightly.
+
+## Updates (October 15, 2021)
 1. Added distinct class to category text
 2. Added "Latest" button to allow users to see all posts (incl. replies), not just OP's/threads
 3. Added x-cloak to prevent images and videos from being shown before alpine can load and display spoilered images/videos.
