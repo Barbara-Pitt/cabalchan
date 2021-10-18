@@ -208,10 +208,14 @@ public class Main {
                         } catch (ArrayIndexOutOfBoundsException ex2){
                             ex2.printStackTrace();
                             if(fileContentType.equals("image/gif")){
-                                //if image
-                                final GifImage gif = GifDecoder.read(attachedFile.getBytes());
-                                attached.setHeight(gif.getHeight());
-                                attached.setWidth(gif.getWidth());
+                                try {
+                                    //if image
+                                    final GifImage gif = GifDecoder.read(attachedFile.getBytes());
+                                    attached.setHeight(gif.getHeight());
+                                    attached.setWidth(gif.getWidth());
+                                } catch (StringIndexOutOfBoundsException ex3){
+                                    ex3.printStackTrace();
+                                }
                             }
                         } finally {
                             dimensions.close();
