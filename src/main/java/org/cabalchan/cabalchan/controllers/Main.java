@@ -25,7 +25,9 @@ import org.cabalchan.cabalchan.repositories.NotificationRepository;
 import org.cabalchan.cabalchan.services.NotificationService;
 import org.cabalchan.cabalchan.utilities.CommentUtil;
 import org.cabalchan.cabalchan.utilities.FileUtil;
+import org.cabalchan.cabalchan.utilities.GifDecoder;
 import org.cabalchan.cabalchan.utilities.IPUtil;
+import org.cabalchan.cabalchan.utilities.GifDecoder.GifImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -190,14 +192,27 @@ public class Main {
                     attached.setFilename(newFileName + "." + fileExt);
                     attached.setFiletype(fileContentType);
 
-                    if(fileContentType.equals("image/png") 
-                    || fileContentType.equals("image/jpeg") 
-                    || fileContentType.equals("image/gif")){
+                    if(fileContentType.equals("image/png") || fileContentType.equals("image/jpeg")){
                         //if image
                         var dimensions = attachedFile.getInputStream();
-                        BufferedImage bimg = ImageIO.read(dimensions);
-                        attached.setHeight(bimg.getHeight());
-                        attached.setWidth(bimg.getWidth());
+                        try {
+                            BufferedImage bimg = ImageIO.read(dimensions);
+                            attached.setHeight(bimg.getHeight());
+                            attached.setWidth(bimg.getWidth());
+                        } catch (IllegalArgumentException ex){
+                            ex.printStackTrace();
+                        } catch (IOException x){
+                            x.printStackTrace();
+                        } finally {
+                            dimensions.close();
+                        }
+                    }
+
+                    if(fileContentType.equals("image/gif")){
+                        //if image
+                        final GifImage gif = GifDecoder.read(attachedFile.getBytes());
+                        attached.setHeight(gif.getHeight());
+                        attached.setWidth(gif.getWidth());
                     }
 
                     if (filter.isPresent()){

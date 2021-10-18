@@ -15,6 +15,7 @@ All changes and proposed changes documented here.
 ## Updates (October 17, 2021)
 1. Updated FAQ with link to page explaining filters.
 2. Image attachments now store height/width information to prevent content reflows upon lazy loading. CSS tweaked slightly.
+3. Image dimension code now handles index out of bounds exceptions for some gifs and closes input stream
 
 ## Updates (October 15, 2021)
 1. Added distinct class to category text
