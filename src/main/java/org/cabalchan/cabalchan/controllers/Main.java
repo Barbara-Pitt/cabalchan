@@ -192,7 +192,9 @@ public class Main {
                     attached.setFilename(newFileName + "." + fileExt);
                     attached.setFiletype(fileContentType);
 
-                    if(fileContentType.equals("image/png") || fileContentType.equals("image/jpeg")){
+                    if(fileContentType.equals("image/png") 
+                    || fileContentType.equals("image/jpeg") 
+                    || fileContentType.equals("image/gif")){
                         //if image
                         var dimensions = attachedFile.getInputStream();
                         try {
@@ -203,18 +205,19 @@ public class Main {
                             ex.printStackTrace();
                         } catch (IOException x){
                             x.printStackTrace();
+                        } catch (ArrayIndexOutOfBoundsException ex2){
+                            ex2.printStackTrace();
+                            if(fileContentType.equals("image/gif")){
+                                //if image
+                                final GifImage gif = GifDecoder.read(attachedFile.getBytes());
+                                attached.setHeight(gif.getHeight());
+                                attached.setWidth(gif.getWidth());
+                            }
                         } finally {
                             dimensions.close();
                         }
                     }
-
-                    if(fileContentType.equals("image/gif")){
-                        //if image
-                        final GifImage gif = GifDecoder.read(attachedFile.getBytes());
-                        attached.setHeight(gif.getHeight());
-                        attached.setWidth(gif.getWidth());
-                    }
-
+                    
                     if (filter.isPresent()){
                         Optional<Filter> f = filterRepository.findById(filter.get());
                         if (f.isPresent()){
