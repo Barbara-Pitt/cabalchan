@@ -9,6 +9,8 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.imaging.ImageReadException;
+import org.apache.commons.imaging.Imaging;
 import org.cabalchan.cabalchan.entities.Attachment;
 import org.cabalchan.cabalchan.entities.Category;
 import org.cabalchan.cabalchan.entities.Entry;
@@ -46,6 +48,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.awt.image.BufferedImage;
+import java.awt.Dimension;
 
 @Controller
 public class Main {
@@ -193,9 +196,25 @@ public class Main {
                     attached.setFiletype(fileContentType);
 
                     if(fileContentType.equals("image/png") 
-                    || fileContentType.equals("image/jpeg") 
-                    || fileContentType.equals("image/gif")){
+                    || fileContentType.equals("image/jpeg") ){
                         //if image
+                        var dimensions = attachedFile.getInputStream();
+                        try {
+                            BufferedImage bimg = ImageIO.read(dimensions);
+                            attached.setHeight(bimg.getHeight());
+                            attached.setWidth(bimg.getWidth());
+                        } catch (IllegalArgumentException ex){
+                            ex.printStackTrace();
+                        } catch (IOException x){
+                            x.printStackTrace();
+                        } finally {
+                            dimensions.close();
+                        }
+                    }
+
+                    //handle gifs including those that break Java ImageIO
+                    if(fileContentType.equals("image/gif")){
+                        //if gif
                         var dimensions = attachedFile.getInputStream();
                         try {
                             BufferedImage bimg = ImageIO.read(dimensions);
@@ -215,8 +234,19 @@ public class Main {
                                     attached.setWidth(gif.getWidth());
                                 } catch (StringIndexOutOfBoundsException ex3){
                                     ex3.printStackTrace();
-                                }
-                            }
+                                    try {
+                                        Dimension d = Imaging.getImageSize(attachedFile.getBytes());
+                                        Double height = d.getHeight();
+                                        Double width = d.getWidth();
+                                        attached.setHeight(height.intValue());
+                                        attached.setWidth(width.intValue());
+                                    } catch (ImageReadException ex4){
+                                        ex4.printStackTrace();
+                                    } catch (IOException ex5){
+                                        ex5.printStackTrace();
+                                    }
+                                }//end gifdecoder fail try/catch
+                            }//endif
                         } finally {
                             dimensions.close();
                         }

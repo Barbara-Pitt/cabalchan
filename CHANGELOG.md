@@ -12,6 +12,9 @@ All changes and proposed changes documented here.
 8. Refactor some logic in the controllers into reusable services.
 9. Look into storing width/height data with images as to not have jumping around with content reflows upon lazy loading images.
 
+## Updates (October 19, 2021)
+1. Updated gif handling with apache commons imaging for more edge cases on handling animated gifs
+
 ## Updates (October 17, 2021)
 1. Updated FAQ with link to page explaining filters.
 2. Image attachments now store height/width information to prevent content reflows upon lazy loading. CSS tweaked slightly.
