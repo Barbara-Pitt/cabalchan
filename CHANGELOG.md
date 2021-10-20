@@ -10,7 +10,6 @@ All changes and proposed changes documented here.
 6. Refactor out and reuse attachment section from entry.html
 7. Refactor regexps to use multiline mode: https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html#lt
 8. Refactor some logic in the controllers into reusable services.
-9. Look into storing width/height data with images as to not have jumping around with content reflows upon lazy loading images.
 
 ## Updates (October 19, 2021)
 1. Updated gif handling with apache commons imaging for more edge cases on handling animated gifs

@@ -20,9 +20,7 @@ https://cabalchan.org
 
 ## Notes
 
-Cabalchan is still in an extreme alpha state. While usable, it is in need of both (manual) functional testing and automated tests. 
-The next step will be writing unit tests and integration tests, while ultimately incorporating something with Github Actions. See 
-changelog for details on updates and proposed changes.
+Cabalchan welcomes all technical and nontechnical suggestions and bugfixes.
 
 ## Special Thanks To:
 - Krates, Caballo, and other jannies from leftypol for UX and other suggestions.
