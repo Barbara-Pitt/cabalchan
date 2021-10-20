@@ -11,7 +11,7 @@ public class CommentUtil {
         result = result.replaceAll("\\[br\\]","");
         result = result.replaceAll("\\[br2\\]","");
         //cite replacement
-        result = result.replaceAll("#([1-9]\\d*)", "[entry $1]");
+        result = result.replaceAll("(^|\\s)#([1-9]\\d*)", "$1[entry $2]");
         //youtube replacement
         result = result.replaceAll("(?:https://)?(?:www\\.)?(?:youtube\\.com)(?:/watch\\?v=)([^\\s]*)", "[youtube]$1[embed][/byoutube]$1[/youtube][invidious]$1[/invidious]");
         //hyperlink replacement
