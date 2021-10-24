@@ -11,25 +11,11 @@ All changes and proposed changes documented here.
 7. Refactor regexps to use multiline mode: https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html#lt
 8. Refactor some logic in the controllers into reusable services.
 
+## Updates (October 23, 2021)
+1. Fixed bug with IOexception in new post functionality
+
 ## Updates (October 20, 2021)
 1. Updated cite regex to not interfere with hyperlinks
 
 ## Updates (October 19, 2021)
 1. Updated gif handling with apache commons imaging for more edge cases on handling animated gifs
-
-## Updates (October 17, 2021)
-1. Updated FAQ with link to page explaining filters.
-2. Image attachments now store height/width information to prevent content reflows upon lazy loading. CSS tweaked slightly.
-3. Image dimension code now handles index out of bounds exceptions for some gifs and closes input stream
-
-## Updates (October 15, 2021)
-1. Added distinct class to category text
-2. Added "Latest" button to allow users to see all posts (incl. replies), not just OP's/threads
-3. Added x-cloak to prevent images and videos from being shown before alpine can load and display spoilered images/videos.
-
-## Updates (October 14, 2021)
-1. Increased spoiler(text) time to transition from 1 second to 1.5 seconds.
-
-## Updates (October 13, 2021)
-1. Addded categories (lightweight boards) functionality.
-2. Spoilered IP addresses in mod menu
