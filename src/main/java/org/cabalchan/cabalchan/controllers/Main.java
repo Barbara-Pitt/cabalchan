@@ -205,8 +205,6 @@ public class Main {
                             attached.setWidth(bimg.getWidth());
                         } catch (IllegalArgumentException ex){
                             ex.printStackTrace();
-                        } catch (IOException x){
-                            x.printStackTrace();
                         } finally {
                             dimensions.close();
                         }
@@ -222,8 +220,6 @@ public class Main {
                             attached.setWidth(bimg.getWidth());
                         } catch (IllegalArgumentException ex){
                             ex.printStackTrace();
-                        } catch (IOException x){
-                            x.printStackTrace();
                         } catch (ArrayIndexOutOfBoundsException ex2){
                             ex2.printStackTrace();
                             if(fileContentType.equals("image/gif")){
