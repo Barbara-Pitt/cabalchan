@@ -11,6 +11,7 @@
       <div class="six columns entries">
         <div th:each="posts : ${entries}" class="entry">
           <div>
+            <a th:if="${posts.parent} != null" th:href="'/entry?entryid=' + ${posts.parent.id}"><i class="bi bi-arrow-90deg-up"></i></a>
             <a th:href="'/entry?entryid=' + ${posts.id}"><span th:text="'#' + ${posts.id}"></span></a>
             <img th:title="${posts.flag.flagname}" th:if="${posts.flag}" th:src="${posts.flag.filename}" alt="flag" />
             <span th:text="${#temporals.format(posts.createDate,'yyyy-MM-dd (EEE) HH:mm:ss')}">&nbsp;</span>
