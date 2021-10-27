@@ -7,6 +7,12 @@ public class CommentUtil {
     public static String process(String comment) {
 
         String result = comment.trim();
+        //tag cleaning
+        result = result.replaceAll("\\[youtube\\]","");
+        result = result.replaceAll("\\[/youtube\\]","");
+        result = result.replaceAll("\\[link\\]","");
+        result = result.replaceAll("\\[/link\\]","");
+        result = result.replaceAll("\\[/blink\\]","");
         //break tag replacement
         result = result.replaceAll("\\[br\\]","");
         result = result.replaceAll("\\[br2\\]","");
