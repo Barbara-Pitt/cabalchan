@@ -10,6 +10,7 @@ public class CommentUtil {
         //tag cleaning
         result = result.replaceAll("\\[youtube\\]","");
         result = result.replaceAll("\\[/youtube\\]","");
+        result = result.replaceAll("\\[/byoutube\\]","");
         result = result.replaceAll("\\[link\\]","");
         result = result.replaceAll("\\[/link\\]","");
         result = result.replaceAll("\\[/blink\\]","");
