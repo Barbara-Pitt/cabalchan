@@ -11,6 +11,9 @@ All changes and proposed changes documented here.
 7. Refactor regexps to use multiline mode: https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html#lt
 8. Refactor some logic in the controllers into reusable services.
 
+## Updates (October 25, 2021)
+1. Comment util updated to clean manual youtube/hyperlink bracket syntax for security reasons
+
 ## Updates (October 24, 2021)
 1. Added up arrows to index view
 
