@@ -7,16 +7,11 @@ public class CommentUtil {
     public static String process(String comment) {
 
         String result = comment.trim();
-        //tag cleaning
-        result = result.replaceAll("\\[youtube\\]","");
-        result = result.replaceAll("\\[/youtube\\]","");
-        result = result.replaceAll("\\[/byoutube\\]","");
-        result = result.replaceAll("\\[link\\]","");
-        result = result.replaceAll("\\[/link\\]","");
-        result = result.replaceAll("\\[/blink\\]","");
-        //break tag replacement
-        result = result.replaceAll("\\[br\\]","");
-        result = result.replaceAll("\\[br2\\]","");
+
+        //preclean square brackets
+        result = result.replaceAll("\\[","%%LBRACKET%%");
+        result = result.replaceAll("\\]","%%RBRACKET%%");
+
         //cite replacement
         result = result.replaceAll("(^|\\s)#([1-9]\\d*)", "$1[entry $2]");
         //youtube replacement
@@ -65,6 +60,11 @@ public class CommentUtil {
 
         //final replacement redtxt
         result = result.replaceAll("\\[redtext\\](.*?)\\[/redtext\\]", "<span class='redtext'>$1</span>");
+
+        //final replace brackets
+        result = result.replaceAll("%%LBRACKET%%","&#91;");
+        result = result.replaceAll("%%RBRACKET%%","&#93;");
+        
         return result;
     }
 }
