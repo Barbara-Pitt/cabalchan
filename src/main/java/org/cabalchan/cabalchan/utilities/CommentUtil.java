@@ -13,6 +13,8 @@ public class CommentUtil {
         result = result.replaceAll("\\]","%%RBRACKET%%");
         result = result.replaceAll("'","%%QUOTE%%");
         result = result.replaceAll("\"","%%DOUBLEQUOTE%%");
+        result = result.replaceAll("<","%%LESSTHAN%%");
+        result = result.replaceAll(">","%%GREATERTHAN%%");
 
         //cite replacement
         result = result.replaceAll("(^|\\s)#([1-9]\\d*)", "$1[entry $2]");
@@ -21,9 +23,9 @@ public class CommentUtil {
         //hyperlink replacement
         result = result.replaceAll("\\b(https?)://[-\\w+&@#/%?=~_|!:,.;(]*[-\\w+&@#/%=~|)]", "[link]$0[/link]");
         //purptext replacement
-        result = result.replaceAll("(^|[\\n\\r])(<)([^\\n\\r]*)", "$1[purptext]&lt;$3[/purptext]");
+        result = result.replaceAll("(^|[\\n\\r])(%%LESSTHAN%%)([^\\n\\r]*)", "$1[purptext]%%LESSTHAN%%$3[/purptext]");
         //quotetext replacement
-        result = result.replaceAll("(^|[\\n\\r])(>)([^\\n\\r]*)", "$1[quotetext]&gt;$3[/quotetext]");
+        result = result.replaceAll("(^|[\\n\\r])(%%GREATERTHAN%%)([^\\n\\r]*)", "$1[quotetext]%%GREATERTHAN%%$3[/quotetext]");
         //red replacement
         result = result.replaceAll("==(.*?)==", "[redtext]$1[/redtext]");
         //spoiler replacement
@@ -73,6 +75,10 @@ public class CommentUtil {
         //final replace quotes
         result = result.replaceAll("%%QUOTE%%","&#39;");
         result = result.replaceAll("%%DOUBLEQUOTE%%","&#34;");
+
+        //final replace lt/gt
+        result = result.replaceAll("%%LESSTHAN%%","&lt;");
+        result = result.replaceAll("%%GREATERTHAN%%","&gt;");
         
         return result;
     }
