@@ -11,13 +11,15 @@ public class CommentUtil {
         //preclean square brackets
         result = result.replaceAll("\\[","%%LBRACKET%%");
         result = result.replaceAll("\\]","%%RBRACKET%%");
+        result = result.replaceAll("'","%%QUOTE%%");
+        result = result.replaceAll("\"","%%DOUBLEQUOTE%%");
 
         //cite replacement
         result = result.replaceAll("(^|\\s)#([1-9]\\d*)", "$1[entry $2]");
         //youtube replacement
         result = result.replaceAll("(?:https://)?(?:www\\.)?(?:youtube\\.com)(?:/watch\\?v=)([-\\w]{11})", "[youtube]$1[/youtube]");
         //hyperlink replacement
-        result = result.replaceAll("\\b(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;(]*[-a-zA-Z0-9+&@#/%=~_|)]", "[link]$0[/blink]$0[/link]");
+        result = result.replaceAll("\\b(https?)://[-\\w+&@#/%?=~_|!:,.;(]*[-\\w+&@#/%=~|)]", "[link]$0[/link]");
         //purptext replacement
         result = result.replaceAll("(^|[\\n\\r])(<)([^\\n\\r]*)", "$1[purptext]&lt;$3[/purptext]");
         //quotetext replacement
@@ -46,9 +48,7 @@ public class CommentUtil {
         result = result.replaceAll("\\[youtube\\]([-\\w]{11})\\[/youtube\\]", ytregexp);
         
         //final replacement hyperlinks
-        result = result.replaceAll("\\[link\\]", "<a target=\"_blank\" href=\"");
-        result = result.replaceAll("\\[/blink\\]", "\">");
-        result = result.replaceAll("\\[/link\\]", "</a>");
+        result = result.replaceAll("\\[link\\](.*?)\\[/link\\]", "<a target=\"_blank\" href=\"$1\">$1</a>");
 
         //final replacement break
         result = result.replaceAll("\\[br\\]", "<br>");
@@ -69,6 +69,10 @@ public class CommentUtil {
         //final replace brackets
         result = result.replaceAll("%%LBRACKET%%","&#91;");
         result = result.replaceAll("%%RBRACKET%%","&#93;");
+
+        //final replace quotes
+        result = result.replaceAll("%%QUOTE%%","&#39;");
+        result = result.replaceAll("%%DOUBLEQUOTE%%","&#34;");
         
         return result;
     }
