@@ -39,7 +39,7 @@ public class CommentUtil {
         result = result.replaceAll("\\[youtube\\](.*?)\\[/youtube\\]", 
         "<div x-data=\"{ yt: false }\"><span class=\"ytembed\"> <span class=\"clickable\" @click=\"yt = !yt\">youtube.com/watch?v=$1[embed]</span> <ul x-show=\"yt\"><iframe width=\"100%\" height=\"315\" src=\"https://www.youtube.com/embed/$1\" title=\"YouTube video player\" loading=\"lazy\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe></ul></span>");
         //invidious link for non youtube users
-        result = result.replaceAll("\\[invidious\\]([^\"&?\\/\s]{11})\\[/invidious\\]", "<a x-show=\"!yt\" href=\"https://iteroni.com/watch?v=$1\" target=\"_blank\">[invidious]</a></div>");
+        result = result.replaceAll("\\[invidious\\]([a-zA-Z0-9-_]{11})\\[/invidious\\]", "<a x-show=\"!yt\" href=\"https://iteroni.com/watch?v=$1\" target=\"_blank\">[invidious]</a></div>");
         //final replacement hyperlinks
         result = result.replaceAll("\\[link\\]", "<a target=\"_blank\" href=\"");
         result = result.replaceAll("\\[/blink\\]", "\">");
