@@ -8,6 +8,9 @@ public class CommentUtil {
 
         String result = comment.trim();
 
+        //preclean html entites
+        result = result.replaceAll("\\[","%%LBRACKET%%");
+
         //preclean square brackets
         result = result.replaceAll("\\[","%%LBRACKET%%");
         result = result.replaceAll("\\]","%%RBRACKET%%");
@@ -15,6 +18,14 @@ public class CommentUtil {
         result = result.replaceAll("\"","%%DOUBLEQUOTE%%");
         result = result.replaceAll("<","%%LESSTHAN%%");
         result = result.replaceAll(">","%%GREATERTHAN%%");
+
+        //preclean html entities
+        result = result.replaceAll("&#91;","%%LBRACKET%%");
+        result = result.replaceAll("&#93;","%%RBRACKET%%");
+        result = result.replaceAll("&#39;","%%QUOTE%%");
+        result = result.replaceAll("&#34;","%%DOUBLEQUOTE%%");
+        result = result.replaceAll("&lt;","%%LESSTHAN%%");
+        result = result.replaceAll("&gt;","%%GREATERTHAN%%");
 
         //cite replacement
         result = result.replaceAll("(^|\\s)#([1-9]\\d*)", "$1[entry $2]");
