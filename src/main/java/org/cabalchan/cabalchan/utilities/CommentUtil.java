@@ -15,7 +15,7 @@ public class CommentUtil {
         //cite replacement
         result = result.replaceAll("(^|\\s)#([1-9]\\d*)", "$1[entry $2]");
         //youtube replacement
-        result = result.replaceAll("(?:https://)?(?:www\\.)?(?:youtube\\.com)(?:/watch\\?v=)([a-zA-Z0-9-_]{11})", "[youtube]$1[/youtube]");
+        result = result.replaceAll("(?:https://)?(?:www\\.)?(?:youtube\\.com)(?:/watch\\?v=)([-\\w]{11})", "[youtube]$1[/youtube]");
         //hyperlink replacement
         result = result.replaceAll("\\b(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;(]*[-a-zA-Z0-9+&@#/%=~_|)]", "[link]$0[/blink]$0[/link]");
         //purptext replacement
@@ -43,7 +43,7 @@ public class CommentUtil {
         + "title=\"YouTube video player\" loading=\"lazy\" frameborder=\"0\" allow=\"accelerometer; autoplay; "
         + "clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe></ul></span>"
         + "<a x-show=\"!yt\" href=\"https://iteroni.com/watch?v=$1\" target=\"_blank\">[invidious]</a></div>";
-        result = result.replaceAll("\\[youtube\\]([a-zA-Z0-9-_]{11})\\[/youtube\\]", ytregexp);
+        result = result.replaceAll("\\[youtube\\]([-\\w]{11})\\[/youtube\\]", ytregexp);
         
         //final replacement hyperlinks
         result = result.replaceAll("\\[link\\]", "<a target=\"_blank\" href=\"");
