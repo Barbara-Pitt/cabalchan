@@ -15,7 +15,7 @@ public class CommentUtil {
         //cite replacement
         result = result.replaceAll("(^|\\s)#([1-9]\\d*)", "$1[entry $2]");
         //youtube replacement
-        result = result.replaceAll("(?:https://)?(?:www\\.)?(?:youtube\\.com)(?:/watch\\?v=)([a-zA-Z0-9-_]{11})", "[youtube]$1[/youtube][invidious]$1[/invidious]");
+        result = result.replaceAll("(?:https://)?(?:www\\.)?(?:youtube\\.com)(?:/watch\\?v=)([a-zA-Z0-9-_]{11})", "[youtube]$1[/youtube]");
         //hyperlink replacement
         result = result.replaceAll("\\b(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;(]*[-a-zA-Z0-9+&@#/%=~_|)]", "[link]$0[/blink]$0[/link]");
         //purptext replacement
@@ -36,10 +36,15 @@ public class CommentUtil {
         result = result.replaceAll("\\[entry ([1-9]\\d*)\\]", "<a href=\"/entry?entryid=$1\"><span>#$1</span></a>");
 
         //final replacement youtube
-        result = result.replaceAll("\\[youtube\\](.*?)\\[/youtube\\]", 
-        "<div x-data=\"{ yt: false }\"><span class=\"ytembed\"> <span class=\"clickable\" @click=\"yt = !yt\">youtube.com/watch?v=$1[embed]</span> <ul x-show=\"yt\"><iframe width=\"100%\" height=\"315\" src=\"https://www.youtube.com/embed/$1\" title=\"YouTube video player\" loading=\"lazy\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe></ul></span>");
-        //invidious link for non youtube users
-        result = result.replaceAll("\\[invidious\\]([a-zA-Z0-9-_]{11})\\[/invidious\\]", "<a x-show=\"!yt\" href=\"https://iteroni.com/watch?v=$1\" target=\"_blank\">[invidious]</a></div>");
+        String ytregexp = 
+        "<div x-data=\"{ yt: false }\"><span class=\"ytembed\"> "
+        + "<span class=\"clickable\" @click=\"yt = !yt\">youtube.com/watch?v=$1[embed]</span> "
+        + "<ul x-show=\"yt\"><iframe width=\"100%\" height=\"315\" src=\"https://www.youtube.com/embed/$1\" "
+        + "title=\"YouTube video player\" loading=\"lazy\" frameborder=\"0\" allow=\"accelerometer; autoplay; "
+        + "clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe></ul></span>"
+        + "<a x-show=\"!yt\" href=\"https://iteroni.com/watch?v=$1\" target=\"_blank\">[invidious]</a></div>";
+        result = result.replaceAll("\\[youtube\\]([a-zA-Z0-9-_]{11})\\[/youtube\\]", ytregexp);
+        
         //final replacement hyperlinks
         result = result.replaceAll("\\[link\\]", "<a target=\"_blank\" href=\"");
         result = result.replaceAll("\\[/blink\\]", "\">");
