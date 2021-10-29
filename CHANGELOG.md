@@ -14,6 +14,7 @@ All changes and proposed changes documented here.
 ## Updates (October 29, 2021)
 1. Updated hyperlink regex to prevent injection attack
 2. Sanitize lt/gt inputs in commentutil
+3. Added html entity filtering to comment util for security purposes
 
 ## Updates (October 27, 2021)
 1. Updated youtube regex to prevent js injection attack
