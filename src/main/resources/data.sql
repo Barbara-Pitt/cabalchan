@@ -81,6 +81,7 @@ values
 ,('/flags/slavoj.png','image/png','Slavoj')
 ,('/flags/snibeti_snab.png','image/png','Snibeti Snab')
 ,('/flags/socialism.png','image/png','Socialism')
+,('/flags/socrates.png','image/png','Socrates')
 ,('/flags/soviet_union.png','image/png','Soviet Union')
 ,('/flags/spurdo.png','image/png','Spurdo')
 ,('/flags/ssnp.png','image/png','SSNP')
