@@ -87,7 +87,7 @@ public class CommentUtil {
         result = result.replaceAll("%%GREATERTHAN%%","&gt;");
 
         //final replace entity literals
-        result = result.replaceAll("%%%(#[0-9]{2,4}|\\w{2,31})%%%","&amp;$1;");
+        result = result.replaceAll("%%%(#[0-9]{2,4}|\\w{2,31})%%%","&amp;$1&#59;");
         
         return result;
     }
