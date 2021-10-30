@@ -8,9 +8,6 @@ public class CommentUtil {
 
         String result = comment.trim();
 
-        //preclean html entites
-        result = result.replaceAll("\\[","%%LBRACKET%%");
-
         //preclean square brackets
         result = result.replaceAll("\\[","%%LBRACKET%%");
         result = result.replaceAll("\\]","%%RBRACKET%%");
