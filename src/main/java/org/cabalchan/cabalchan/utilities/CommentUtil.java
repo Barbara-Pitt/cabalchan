@@ -20,12 +20,7 @@ public class CommentUtil {
         result = result.replaceAll(">","%%GREATERTHAN%%");
 
         //preclean html entities
-        result = result.replaceAll("&#91;","%%LBRACKET%%");
-        result = result.replaceAll("&#93;","%%RBRACKET%%");
-        result = result.replaceAll("&#39;","%%QUOTE%%");
-        result = result.replaceAll("&#34;","%%DOUBLEQUOTE%%");
-        result = result.replaceAll("&lt;","%%LESSTHAN%%");
-        result = result.replaceAll("&gt;","%%GREATERTHAN%%");
+        result = result.replaceAll("&(#[0-9]{2,4}|\\w{2,31});","%%%$1%%%");
 
         //cite replacement
         result = result.replaceAll("(^|\\s)#([1-9]\\d*)", "$1[entry $2]");
@@ -90,6 +85,9 @@ public class CommentUtil {
         //final replace lt/gt
         result = result.replaceAll("%%LESSTHAN%%","&lt;");
         result = result.replaceAll("%%GREATERTHAN%%","&gt;");
+
+        //final replace entity literals
+        result = result.replaceAll("%%%(#[0-9]{2,4}|\\w{2,31})%%%","&$1;");
         
         return result;
     }
