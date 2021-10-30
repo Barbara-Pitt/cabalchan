@@ -17,10 +17,14 @@ public class CommentUtil {
         result = result.replaceAll(">","%%GREATERTHAN%%");
 
         //preclean html entities
-        result = result.replaceAll("&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-fA-F]{1,6});","%%%$1%%%");
+        result = result.replaceAll("&([a-z0-9]+|#[0]*[0-9]{1,6}|#x[0]*[0-9a-fA-F]{1,6});","%%%$1%%%");
 
         //cite replacement
         result = result.replaceAll("(^|\\s)#([1-9]\\d*)", "$1[entry $2]");
+        //youtube replacement
+        result = result.replaceAll("(?:https://)?(?:www\\.)?(?:youtube\\.com)(?:/watch\\?v=)([-\\w]{11})", "[youtube]$1[/youtube]");
+        //hyperlink replacement
+        result = result.replaceAll("\\b(https?)://[-\\w+&@#/%?=~_|!:,.;(]*[-\\w+&@#/%=~|)]", "[link]$0[/link]");
         //purptext replacement
         result = result.replaceAll("(^|[\\n\\r])(%%LESSTHAN%%)([^\\n\\r]*)", "$1[purptext]%%LESSTHAN%%$3[/purptext]");
         //quotetext replacement
@@ -32,15 +36,8 @@ public class CommentUtil {
         //line break(s)
         result = result.replaceAll("(\r?\n){2,}", "[br2]");
         result = result.replaceAll("\r?\n", "[br]");
-
         //strip html tags
         result = Jsoup.clean(result, Safelist.none());
-
-        //youtube replacement
-        result = result.replaceAll("(?:https://)?(?:www\\.)?(?:youtube\\.com)(?:/watch\\?v=)([-\\w]{11})", "[youtube]$1[/youtube]");
-
-        //hyperlink replacement
-        result = result.replaceAll("\\b(https?)://[-\\w+&@#/%?=~_|!:,.;(]*[-\\w+&@#/%=~|)]", "[link]$0[/link]");
 
         //final replacement cites
         result = result.replaceAll("\\[entry ([1-9]\\d*)\\]", "<a href=\"/entry?entryid=$1\"><span>#$1</span></a>");
@@ -87,7 +84,7 @@ public class CommentUtil {
         result = result.replaceAll("%%GREATERTHAN%%","&gt;");
 
         //final replace entity literals
-        result = result.replaceAll("%%%([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-fA-F]{1,6})%%%","&amp;$1&#59;");
+        result = result.replaceAll("%%%([a-z0-9]+|#[0]*[0-9]{1,6}|#x[0]*[0-9a-fA-F]{1,6})%%%","&amp;$1&#59;");
         
         return result;
     }
