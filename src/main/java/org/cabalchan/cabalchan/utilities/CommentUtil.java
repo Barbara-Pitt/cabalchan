@@ -17,7 +17,7 @@ public class CommentUtil {
         result = result.replaceAll(">","%%GREATERTHAN%%");
 
         //preclean html entities
-        result = result.replaceAll("&([a-z0-9]+|#[0]*[0-9]{1,6}|#x[0]*[0-9a-fA-F]{1,6});","%%%$1%%%");
+        result = result.replaceAll("&([a-z0-9]+|#[0]*[0-9]{1,6}|#x[0]*[0-9a-fA-F]{1,6})(;)*","%%%$1$2%%%");
 
         //cite replacement
         result = result.replaceAll("(^|\\s)#([1-9]\\d*)", "$1[entry $2]");
@@ -84,7 +84,7 @@ public class CommentUtil {
         result = result.replaceAll("%%GREATERTHAN%%","&gt;");
 
         //final replace entity literals
-        result = result.replaceAll("%%%([a-z0-9]+|#[0]*[0-9]{1,6}|#x[0]*[0-9a-fA-F]{1,6})%%%","&amp;$1&#59;");
+        result = result.replaceAll("%%%([a-z0-9]+|#[0]*[0-9]{1,6}|#x[0]*[0-9a-fA-F]{1,6})(;)*%%%","&amp;$1$2");
         
         return result;
     }
