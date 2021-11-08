@@ -12,7 +12,8 @@
         <div class="entry op" th:if="${previous} == null">
             <div>
                 <a th:if="${OP.parent} != null" th:href="'/entry?entryid=' + ${OP.parent.id}"><i class="bi bi-arrow-90deg-up"></i></a>
-                <span @click="reply = !reply" th:text="'#' + ${OP.id}" class="reply"></span>
+                <span th:if="!${oldOP}" @click="reply = !reply" th:text="'#' + ${OP.id}" class="reply"></span>
+                <span th:if="${oldOP}" th:text="'#' + ${OP.id}" class="reply"></span>
                 <img th:title="${OP.flag.flagname}" th:if="${OP.flag}" th:src="${OP.flag.filename}" alt="flag" />
                 <span th:text="${#temporals.format(OP.createDate,'yyyy-MM-dd (EEE) HH:mm:ss')}">&nbsp;</span>
                 </div>
